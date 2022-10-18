@@ -6,34 +6,27 @@ import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
 
-
-class MockUserProfileRepository extends Mock implements IUserProfileRepository {}
+import '../../../../mocks.dart';
 
 final mockUserProfileRepository = MockUserProfileRepository();
 
 void main() {
-
-  final user = User(username: 'Lucas Cordeiro', joinedDate: DateTime.now());
-
   group('Get Current User Usecase Test', () {
     test('GetCurrentUserUseCase should return current User ', () async {
-
       //arrenge
-      when(() => mockUserProfileRepository.getCurrentUser())
+      when(() => mockUserProfileRepository.getCurrentUser(any()))
           .thenAnswer((_) async => Right(user));
       final usecase = GetCurrentUserUsecase(mockUserProfileRepository);
 
       //act
-      final result = await usecase.call();
+      final result = await usecase.call(user.username);
 
       //assert
       expect(result, Right(user));
-      
     });
     test('Test if formatDate is correct', () async {
       final date = user.dateJoined;
-      expect(date,  format.formatDate(DateTime.now()));
+      expect(date, format.formatDate(DateTime.now()));
+    });
   });
-  });
-
 }

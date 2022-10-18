@@ -1,17 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:posterr/core/error/errors.dart';
+import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import '../repositories/user_profile.repository.dart';
 
 abstract class ISetUsersUsecase {
-  Future<Either<UserException, int>> call();
+  Future<Either<UserException, bool>> call(List<User> user);
 }
 
-class GetCurrentUserUsecase implements ISetUsersUsecase {
+class SetUsersUsecase implements ISetUsersUsecase {
   final IUserProfileRepository repository;
-  GetCurrentUserUsecase(this.repository);
+  SetUsersUsecase(this.repository);
 
   @override
-  Future<Either<UserException, int>> call() async {
-    return repository.setUsers();
+  Future<Either<UserException, bool>> call(List<User> users) async {
+    return repository.setUsers(users);
   }
 }

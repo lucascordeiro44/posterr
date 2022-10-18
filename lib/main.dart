@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posterr/main_module.dart';
+import 'package:posterr/modules/user_profile/data/repositories/user_profile.repository_impl.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
-
+import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  setUpInitialUsers();
+  await setUpHive();
   runApp(ModularApp(module: MainModule(), child: const MyApp()));
 }
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -21,12 +27,20 @@ class MyApp extends StatelessWidget {
         routeInformationParser: Modular.routeInformationParser,
         routerDelegate: Modular.routerDelegate);
   }
+
+  @override
+  void dispose() {
+    closeBoxes();
+    super.dispose();
+  }
 }
 
-
-setUpInitialUsers() async {
+setUpHive() async {
+  await Hive.initFlutter();
+  await Hive.openBox<User>('users');
   Hive.registerAdapter(UserAdapter());
-  var box = await Hive.openBox<User>('users');
-  box.add(User(username: 'Lucas Cordeiro', joinedDate: DateTime.now()));
 }
 
+closeBoxes() {
+  Hive.close();
+}

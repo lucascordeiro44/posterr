@@ -1,4 +1,3 @@
-import 'package:hive/hive.dart';
 import 'package:posterr/modules/user_profile/data/datasources/user.datasource.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/core/error/errors.dart';
@@ -11,20 +10,19 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
   UserProfileRepositoryImpl({required this.datasource});
 
   @override
-  Future<Either<UserException, User>> getCurrentUser() async {
+  Future<Either<UserException, User>> getCurrentUser(String key) async {
     try {
-       final user = await datasource.getUser();
-       return right(user);
-    } catch (e){
+      final user = await datasource.getUser(key);
+      return right(user);
+    } catch (e) {
       return left(UserException(message: e.toString()));
     }
   }
-  
+
   @override
-  Future<Either<UserException, int>> setUsers() async {
-    try{
-      var box = await Hive.openBox<User>('users');
-      var result = await box.add(User(username: 'Lucas Cordeiro', joinedDate: DateTime.now()));
+  Future<Either<UserException, bool>> setUsers(List<User> users) async {
+    try {
+      final result = await datasource.setUsers(users);
       return right(result);
     } catch (e) {
       return left(UserException(message: e.toString()));
