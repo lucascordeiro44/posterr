@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posterr/main_module.dart';
 
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
   runApp(ModularApp(module: MainModule(), child: const MyApp()));
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
         routeInformationParser: Modular.routeInformationParser,
         routerDelegate: Modular.routerDelegate);
   }
+
+  
 }
+
 
 
