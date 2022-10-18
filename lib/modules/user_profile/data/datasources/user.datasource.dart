@@ -9,9 +9,7 @@ class UserDatasource implements IUserDatasource {
     UserDatasource();
   @override
   Future<dynamic> getUser() async {
-
     final response = await Hive.openBox<User>('users');
-
     throw UnimplementedError();
   }
 }

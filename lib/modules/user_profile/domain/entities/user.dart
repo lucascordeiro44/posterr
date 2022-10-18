@@ -1,12 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 import 'package:posterr/core/error/formats.dart';
 
-class User extends Equatable {
-  final String username;
-  final DateTime joinedDate; 
+part 'user.g.dart';
 
-   String get dateJoined => formatDate(joinedDate);
+@HiveType(typeId: 1)
+class User extends Equatable {
+
+  @HiveField(0)
+  final String username;
+  @HiveField(1)
+  final DateTime joinedDate; 
+  
+  String get dateJoined => formatDate(joinedDate);
 
   const User({
     required this.username,

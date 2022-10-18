@@ -4,7 +4,7 @@ abstract class IException {
   IException({required this.message, this.stackTrace });
 }
 
-class GetUserException extends IException {
-  GetUserException({required super.message});
+class UserException extends IException {
+  UserException({required super.message});
 
 }

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posterr/main_module.dart';
+import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 
 
 void main() async {
   await Hive.initFlutter();
+  setUpInitialUsers();
   runApp(ModularApp(module: MainModule(), child: const MyApp()));
 }
 class MyApp extends StatelessWidget {
@@ -19,9 +21,12 @@ class MyApp extends StatelessWidget {
         routeInformationParser: Modular.routeInformationParser,
         routerDelegate: Modular.routerDelegate);
   }
-
-  
 }
 
 
+setUpInitialUsers() async {
+  Hive.registerAdapter(UserAdapter());
+  var box = await Hive.openBox<User>('users');
+  box.add(User(username: 'Lucas Cordeiro', joinedDate: DateTime.now()));
+}
 
