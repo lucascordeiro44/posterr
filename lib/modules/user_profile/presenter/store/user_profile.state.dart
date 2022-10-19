@@ -7,9 +7,7 @@ class SuccessUserProfileState implements UserProfileState {
   SuccessUserProfileState(this.user);
 }
 
-class InitialUserProfileState extends UserProfileState {
-  InitialUserProfileState(User user) : super();
-}
+class InitialUserProfileState extends UserProfileState {}
 
 class LoadingUserProfileState extends UserProfileState {}
 
