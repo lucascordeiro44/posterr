@@ -20,6 +20,16 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
   }
 
   @override
+  Future<Either<UserException, List<User>>> getUsers() async {
+    try {
+      final List<User> user = await datasource.getUsers();
+      return right(user);
+    } catch (e) {
+      return left(UserException(message: e.toString()));
+    }
+  }
+
+  @override
   Future<Either<UserException, bool>> setUsers(List<User> users) async {
     try {
       final result = await datasource.setUsers(users);

@@ -5,6 +5,7 @@ import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 abstract class IUserDatasource {
   Future<bool> setUsers(List<User> users);
   Future<User> getUser(String key);
+  Future<List<User>> getUsers();
 }
 
 class UserDatasource implements IUserDatasource {
@@ -17,8 +18,21 @@ class UserDatasource implements IUserDatasource {
       for (var user in users) {
         box.put(user.username, user);
       }
-      Future.delayed(const Duration(seconds: 2));
+      Future.delayed(const Duration(seconds: 1));
       return true;
+    } catch (e, s) {
+      throw UserException(message: e.toString(), stackTrace: s);
+    }
+  }
+
+  @override
+  Future<List<User>> getUsers() async {
+    try {
+      Future.delayed(const Duration(seconds: 1));
+      List<User> users = [];
+      final result = box.values;
+      users.addAll(result);
+      return users;
     } catch (e, s) {
       throw UserException(message: e.toString(), stackTrace: s);
     }
@@ -27,7 +41,7 @@ class UserDatasource implements IUserDatasource {
   @override
   Future<User> getUser(String key) async {
     try {
-      Future.delayed(const Duration(seconds: 2));
+      Future.delayed(const Duration(seconds: 1));
       return box.get(key)!;
     } catch (e, s) {
       throw UserException(message: e.toString(), stackTrace: s);

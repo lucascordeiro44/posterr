@@ -56,4 +56,27 @@ void main() {
           throwsA(isA<UserException>()));
     });
   });
+
+  group('Should Test get All users', () async {
+    test('Should test get all users in user datasource succesfull', () async {
+      when(() => mockBox.values).thenReturn(users);
+      final datasource = UserDatasource(box: mockBox);
+      //act
+      final result = await datasource.getUsers();
+      //assert
+      expect(result, equals(users));
+    });
+
+    test(
+        'Should throw a UserException when an error occurs while getting all users',
+        () async {
+      when(() => mockBox.values).thenThrow(Exception());
+      final datasource = UserDatasource(box: mockBox);
+      //act
+      await datasource.getUsers();
+      //assert
+      expect(() async => await datasource.setUsers(users),
+          throwsA(isA<UserException>()));
+    });
+  });
 }

@@ -21,6 +21,10 @@ final List<User> users = [
       fullName: 'Jose Cordeiro',
       username: 'josecordeiro',
       joinedDate: DateTime.now()),
+  User(
+      fullName: 'Juliano Cordeiro',
+      username: 'julianocordeiro',
+      joinedDate: DateTime.now()),
 ];
 
 class MockUserDatasource extends Mock implements IUserDatasource {}

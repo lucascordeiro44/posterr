@@ -2,8 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:posterr/core/error/formats.dart' as format;
-import 'package:posterr/modules/user_profile/domain/entities/user.dart';
-import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
 
 import '../../../../mocks.dart';
@@ -25,8 +23,9 @@ void main() {
       expect(result, Right(user));
     });
     test('Test if formatDate is correct', () async {
+      const formatDate = 'October 18, 2022';
       final date = user.dateJoined;
-      expect(date, format.formatDate(DateTime.now()));
+      expect(date, equals(formatDate));
     });
   });
 }

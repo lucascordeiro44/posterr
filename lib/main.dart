@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posterr/main_module.dart';
-import 'package:posterr/modules/user_profile/data/repositories/user_profile.repository_impl.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
-import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
 
 void main() async {
   await setUpHive();

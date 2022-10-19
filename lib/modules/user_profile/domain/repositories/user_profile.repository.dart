@@ -5,4 +5,5 @@ import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 abstract class IUserProfileRepository {
   Future<Either<UserException, User>> getCurrentUser(String key);
   Future<Either<UserException, bool>> setUsers(List<User> users);
+  Future<Either<UserException, List<User>>> getUsers();
 }

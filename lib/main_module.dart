@@ -5,6 +5,7 @@ import 'package:posterr/modules/user_profile/data/datasources/user.datasource.da
 import 'package:posterr/modules/user_profile/data/repositories/user_profile.repository_impl.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
+import 'package:posterr/modules/user_profile/domain/usecases/get_users.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
 import 'package:posterr/modules/user_profile/presenter/user_profile.page.dart';
 
@@ -23,6 +24,7 @@ class MainModule extends Module {
 
         //UseCases
         Bind.factory<IGetCurrentUserUsecase>((i) => GetCurrentUserUsecase(i())),
+        Bind.factory<IGetUsersUsecase>((i) => GetUsersUsecase(i())),
         Bind.factory<ISetUsersUsecase>((i) => SetUsersUsecase(i())),
       ];
 
