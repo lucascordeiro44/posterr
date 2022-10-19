@@ -7,3 +7,7 @@ abstract class IException {
 class UserException extends IException {
   UserException({required super.message, super.stackTrace});
 }
+
+class CacheException extends IException {
+  CacheException({required super.message, super.stackTrace});
+}
