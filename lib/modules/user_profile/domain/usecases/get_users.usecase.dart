@@ -4,7 +4,7 @@ import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
 
 abstract class IGetUsersUsecase {
-  Future<Either<UserException, List<User>>> call();
+  Future<Either<Failure, List<User>>> call();
 }
 
 class GetUsersUsecase implements IGetUsersUsecase {
@@ -12,7 +12,7 @@ class GetUsersUsecase implements IGetUsersUsecase {
   GetUsersUsecase(this.repository);
 
   @override
-  Future<Either<UserException, List<User>>> call() async {
+  Future<Either<Failure, List<User>>> call() async {
     return repository.getUsers();
   }
 }

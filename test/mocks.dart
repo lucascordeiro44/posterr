@@ -3,6 +3,11 @@ import 'package:posterr/modules/user_profile/data/datasources/user.datasource.da
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
 
+final testUserFormatDate = User(
+    fullName: 'Lucas Cordeiro',
+    username: 'lucascordeiro',
+    joinedDate: DateTime(2022, 10, 18));
+
 final user = User(
     fullName: 'Lucas Cordeiro',
     username: 'lucascordeiro',

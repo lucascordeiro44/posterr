@@ -10,32 +10,32 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
   UserProfileRepositoryImpl({required this.datasource});
 
   @override
-  Future<Either<UserException, User>> getCurrentUser(String key) async {
+  Future<Either<Failure, User>> getCurrentUser(String key) async {
     try {
       final user = await datasource.getUser(key);
       return right(user);
-    } catch (e) {
-      return left(UserException(message: e.toString()));
+    } on UserException catch (e, s) {
+      return left(GetUserException(message: e.toString(), stackTrace: s));
     }
   }
 
   @override
-  Future<Either<UserException, List<User>>> getUsers() async {
+  Future<Either<Failure, List<User>>> getUsers() async {
     try {
       final List<User> user = await datasource.getUsers();
       return right(user);
-    } catch (e) {
-      return left(UserException(message: e.toString()));
+    } on UserException catch (e, s) {
+      return left(GetUserException(message: e.toString(), stackTrace: s));
     }
   }
 
   @override
-  Future<Either<UserException, bool>> setUsers(List<User> users) async {
+  Future<Either<Failure, bool>> setUsers(List<User> users) async {
     try {
       final result = await datasource.setUsers(users);
       return right(result);
-    } catch (e) {
-      return left(UserException(message: e.toString()));
+    } on UserException catch (e, s) {
+      return left(SetUserException(message: e.toString(), stackTrace: s));
     }
   }
 }

@@ -3,7 +3,7 @@ import 'package:posterr/core/error/errors.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 
 abstract class IUserProfileRepository {
-  Future<Either<UserException, User>> getCurrentUser(String key);
-  Future<Either<UserException, bool>> setUsers(List<User> users);
-  Future<Either<UserException, List<User>>> getUsers();
+  Future<Either<Failure, User>> getCurrentUser(String key);
+  Future<Either<Failure, bool>> setUsers(List<User> users);
+  Future<Either<Failure, List<User>>> getUsers();
 }
