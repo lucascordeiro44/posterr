@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:posterr/core/error/errors.dart';
-import 'package:posterr/core/error/formats.dart' as format;
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
 
 import '../../../../mocks.dart';

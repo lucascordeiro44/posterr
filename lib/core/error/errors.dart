@@ -21,3 +21,11 @@ class SetUserException extends Failure {
 class GetUserException extends Failure {
   GetUserException({required super.message, super.stackTrace});
 }
+
+class PostFailure extends Failure {
+  PostFailure({required super.message});
+}
+
+class PostException extends IException {
+  PostException({required super.message});
+}

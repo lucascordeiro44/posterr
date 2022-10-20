@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:posterr/modules/user_profile/presenter/store/user_profile.state.dart';
+import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
 import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 
 class UserProfilePage extends StatefulWidget {

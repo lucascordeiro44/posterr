@@ -15,7 +15,7 @@ void main() {
   group('Should Test GetUser', () async {
     test('Should test GetUser in user datasource', () async {
       when(() => mockBox.get(any())).thenReturn(user);
-      final datasource = UserDatasource(box: mockBox);
+      final datasource = UserDatasource(usersBox: mockBox);
       //act
       final result = await datasource.getUser(user.username);
       //assert
@@ -25,7 +25,7 @@ void main() {
     test('should throw a UserException when there is a not valid User',
         () async {
       when(() => mockBox.get(any())).thenThrow(Exception());
-      final datasource = UserDatasource(box: mockBox);
+      final datasource = UserDatasource(usersBox: mockBox);
       //act
       await datasource.getUser(user.username);
       //assert
@@ -37,7 +37,7 @@ void main() {
   group('Should Test setUsers', () async {
     test('Should test setUsers in user datasource succesfull', () async {
       when(() => mockBox.putAll(any())).thenAnswer((_) async => true);
-      final datasource = UserDatasource(box: mockBox);
+      final datasource = UserDatasource(usersBox: mockBox);
       //act
       final result = await datasource.setUsers(users);
       //assert
@@ -48,7 +48,7 @@ void main() {
         'Should throw a UserException when an error occurs while adding the users',
         () async {
       when(() => mockBox.putAll(any())).thenThrow(Exception());
-      final datasource = UserDatasource(box: mockBox);
+      final datasource = UserDatasource(usersBox: mockBox);
       //act
       await datasource.setUsers(users);
       //assert
@@ -60,7 +60,7 @@ void main() {
   group('Should Test get All users', () async {
     test('Should test get all users in user datasource succesfull', () async {
       when(() => mockBox.values).thenReturn(users);
-      final datasource = UserDatasource(box: mockBox);
+      final datasource = UserDatasource(usersBox: mockBox);
       //act
       final result = await datasource.getUsers();
       //assert
@@ -71,7 +71,7 @@ void main() {
         'Should throw a UserException when an error occurs while getting all users',
         () async {
       when(() => mockBox.values).thenThrow(Exception());
-      final datasource = UserDatasource(box: mockBox);
+      final datasource = UserDatasource(usersBox: mockBox);
       //act
       await datasource.getUsers();
       //assert

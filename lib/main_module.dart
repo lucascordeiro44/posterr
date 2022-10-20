@@ -7,7 +7,7 @@ import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.us
 import 'package:posterr/modules/user_profile/domain/usecases/get_users.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
 import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
-import 'package:posterr/modules/user_profile/presenter/user_profile.page.dart';
+import 'package:posterr/modules/user_profile/presenter/pages/user_profile.page.dart';
 
 /// It's the main App module. Each module should have your binds (dependencys) and routes
 class MainModule extends Module {
@@ -19,7 +19,7 @@ class MainModule extends Module {
 
         //datasources
         Bind.factory<IUserDatasource>(
-            (i) => UserDatasource(box: Hive.box('users'))),
+            (i) => UserDatasource(usersBox: Hive.box('users'))),
 
         //Repositorys
         Bind.factory<IUserProfileRepository>(

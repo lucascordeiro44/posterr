@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posterr/core/error/errors.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
@@ -10,14 +9,14 @@ abstract class IUserDatasource {
 }
 
 class UserDatasource implements IUserDatasource {
-  Box<User> box;
-  UserDatasource({required this.box});
+  Box<User> usersBox;
+  UserDatasource({required this.usersBox});
 
   @override
   Future<bool> setUsers(List<User> users) async {
     try {
       for (var user in users) {
-        box.put(user.username, user);
+        usersBox.put(user.username, user);
       }
       await Future.delayed(const Duration(seconds: 1));
       return true;
@@ -29,9 +28,9 @@ class UserDatasource implements IUserDatasource {
   @override
   Future<List<User>> getUsers() async {
     try {
-      Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       List<User> users = [];
-      final result = box.values;
+      final result = usersBox.values;
       users.addAll(result);
       return users;
     } catch (e, s) {
@@ -43,7 +42,7 @@ class UserDatasource implements IUserDatasource {
   Future<User> getUser(String key) async {
     try {
       await Future.delayed(const Duration(seconds: 1));
-      return box.get(key)!;
+      return usersBox.get(key)!;
     } catch (e, s) {
       throw UserException(message: e.toString(), stackTrace: s);
     }
