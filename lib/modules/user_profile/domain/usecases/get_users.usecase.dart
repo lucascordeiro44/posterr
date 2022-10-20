@@ -13,6 +13,6 @@ class GetUsersUsecase implements IGetUsersUsecase {
 
   @override
   Future<Either<Failure, List<User>>> call() async {
-    return repository.getUsers();
+    return await repository.getUsers();
   }
 }

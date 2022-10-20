@@ -13,6 +13,6 @@ class SetUsersUsecase implements ISetUsersUsecase {
 
   @override
   Future<Either<Failure, bool>> call(List<User> users) async {
-    return repository.setUsers(users);
+    return await repository.setUsers(users);
   }
 }

@@ -13,6 +13,6 @@ class GetCurrentUserUsecase implements IGetCurrentUserUsecase {
 
   @override
   Future<Either<Failure, User>> call(String key) async {
-    return repository.getCurrentUser(key);
+    return await repository.getCurrentUser(key);
   }
 }

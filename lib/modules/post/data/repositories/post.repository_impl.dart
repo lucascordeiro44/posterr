@@ -18,4 +18,14 @@ class PostRepositoryImpl implements IPostsRepository {
       return left(PostFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> createPost(Post post) async {
+    try {
+      final result = await datasource.createPost(post);
+      return right(result);
+    } catch (e) {
+      return left(PostFailure(message: e.toString()));
+    }
+  }
 }
