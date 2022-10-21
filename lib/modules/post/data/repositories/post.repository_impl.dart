@@ -1,11 +1,14 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:posterr/core/error/errors.dart';
 import 'package:posterr/modules/post/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
+import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 
 class PostRepositoryImpl implements IPostsRepository {
   IPostDatasource datasource;
+  final userStore = Modular.get<UserProfileStore>();
 
   PostRepositoryImpl(this.datasource);
 
@@ -20,8 +23,10 @@ class PostRepositoryImpl implements IPostsRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> createPost(Post post) async {
+  Future<Either<Failure, bool>> createPost(String text) async {
     try {
+      final user = userStore.getUser;
+      final post = Post(id: '1', text: text, user: user, totalComments: 0);
       final result = await datasource.createPost(post);
       return right(result);
     } catch (e) {

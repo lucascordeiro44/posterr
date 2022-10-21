@@ -15,13 +15,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   void initState() {
     super.initState();
-    userProfileStore.getCurrentUser('lucascordeiro');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('UserProfile')),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => Modular.to.navigate('/post/home_page'),
+          child: const Icon(Icons.add)),
       body: _body(context),
     );
   }

@@ -5,7 +5,7 @@ import 'package:posterr/modules/post/domain/entities/post.dart';
 import '../repositories/post.repository.dart';
 
 abstract class IGetPostsUsecase {
-  Future<Either<Failure, List<Post>>> getPosts();
+  Future<Either<Failure, List<Post>>> call();
 }
 
 class GetPostsUsecase implements IGetPostsUsecase {
@@ -14,7 +14,7 @@ class GetPostsUsecase implements IGetPostsUsecase {
   GetPostsUsecase(this.repository);
 
   @override
-  Future<Either<Failure, List<Post>>> getPosts() {
+  Future<Either<Failure, List<Post>>> call() {
     return repository.getPosts();
   }
 }

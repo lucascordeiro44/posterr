@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:posterr/modules/post/post_module.dart';
 import 'package:posterr/modules/user_profile/data/datasources/user.datasource.dart';
 import 'package:posterr/modules/user_profile/data/repositories/user_profile.repository_impl.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
@@ -35,6 +36,7 @@ class MainModule extends Module {
   List<ModularRoute> get routes => [
         // App Initial Route
         ChildRoute('/', child: (context, args) => const UserProfilePage()),
+        ModuleRoute('/post', module: PostModule())
         // Modules Routes
       ];
 }
