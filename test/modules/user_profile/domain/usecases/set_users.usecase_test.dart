@@ -16,7 +16,7 @@ void main() {
       //act
       final result = await usecase.call(users);
       //assert
-      expect(result, true);
+      expect(result, const Right(true));
     });
   });
 }

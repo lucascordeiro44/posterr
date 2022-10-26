@@ -9,16 +9,17 @@ final MockUserProfileRepository mockUserProfileRepository =
     MockUserProfileRepository();
 
 void main() {
-  group('Get Users Usecase Test', () async {
-    test('Should return all users in the Hive database', () async {});
-    //arrenge
-    when(() => mockUserProfileRepository.getUsers())
-        .thenAnswer((_) async => Right(users));
-    final usecase = GetUsersUsecase(mockUserProfileRepository);
-    //act
-    final result = await usecase.call();
+  group('Get Users Usecase Test', () {
+    test('Should return all users in the Hive database', () async {
+      //arrenge
+      when(() => mockUserProfileRepository.getUsers())
+          .thenAnswer((_) async => Right(users));
+      final usecase = GetUsersUsecase(mockUserProfileRepository);
+      //act
+      final result = await usecase.call();
 
-    //assert
-    expect(result, equals(Right(users)));
+      //assert
+      expect(result, equals(Right(users)));
+    });
   });
 }

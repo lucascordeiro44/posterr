@@ -15,7 +15,7 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
       final user = await datasource.getUser(key);
       return right(user);
     } on UserException catch (e, s) {
-      return left(GetUserException(message: e.toString(), stackTrace: s));
+      return left(GetUserException(message: e.message, stackTrace: s));
     }
   }
 
@@ -25,7 +25,7 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
       final List<User> user = await datasource.getUsers();
       return right(user);
     } on UserException catch (e, s) {
-      return left(GetUserException(message: e.toString(), stackTrace: s));
+      return left(GetUserException(message: e.message, stackTrace: s));
     }
   }
 
@@ -35,7 +35,7 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
       final result = await datasource.setUsers(users);
       return right(result);
     } on UserException catch (e, s) {
-      return left(SetUserException(message: e.toString(), stackTrace: s));
+      return left(SetUserException(message: e.message, stackTrace: s));
     }
   }
 }
