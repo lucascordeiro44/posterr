@@ -21,7 +21,7 @@ class PostModule extends Module {
         Bind.singleton((i) => PostStore(i(), i())),
 
         //repositorys
-        Bind.factory<IPostsRepository>((i) => PostRepositoryImpl(i())),
+        Bind.factory<IPostsRepository>((i) => PostRepositoryImpl(i(), i())),
 
         //usecases
         Bind.factory<ICreatePostUsecase>((i) => CreatePostUsecase(i())),

@@ -8,7 +8,7 @@ class UserException extends IException {
   UserException({required super.message, super.stackTrace});
 }
 
-abstract class Failure {
+abstract class Failure implements Exception {
   final String message;
   StackTrace? stackTrace;
   Failure({required this.message, this.stackTrace});
@@ -22,8 +22,18 @@ class GetUserException extends Failure {
   GetUserException({required super.message, super.stackTrace});
 }
 
+class NullPostException implements Exception {}
+
 class PostFailure extends Failure {
   PostFailure({required super.message});
+}
+
+class NullPostFailure extends Failure {
+  NullPostFailure({required super.message});
+}
+
+class ErrorGetLoggedUser extends Failure {
+  ErrorGetLoggedUser({required super.message});
 }
 
 class PostException extends IException {

@@ -4,12 +4,23 @@ import 'package:posterr/modules/post/domain/entities/post.dart';
 
 abstract class IPostDatasource {
   Future<List<Post>> getPosts();
+  Future<Post?> getPost(int postId);
   Future<bool> createPost(Post post);
 }
 
 class PostDatasource implements IPostDatasource {
   Box<Post> postsBox;
   PostDatasource(this.postsBox);
+
+  @override
+  Future<Post?> getPost(int postId) async {
+    try {
+      await Future.delayed(const Duration(microseconds: 200));
+      return postsBox.getAt(postId);
+    } catch (e) {
+      throw PostException(message: e.toString());
+    }
+  }
 
   @override
   Future<List<Post>> getPosts() async {

@@ -21,13 +21,14 @@ class PostAdapter extends TypeAdapter<Post> {
       user: fields[1] as User,
       totalComments: fields[2] as int,
       text: fields[3] as String,
+      reposts: (fields[4] as HiveList?)?.castHiveList(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Post obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class PostAdapter extends TypeAdapter<Post> {
       ..writeByte(2)
       ..write(obj.totalComments)
       ..writeByte(3)
-      ..write(obj.text);
+      ..write(obj.text)
+      ..writeByte(4)
+      ..write(obj.reposts);
   }
 
   @override

@@ -12,7 +12,7 @@ class UserProfileStore extends ValueNotifier<UserProfileState> {
 
   User? user;
 
-  User get getUser => user!;
+  User get getLoggedUser => user!;
 
   Future<void> login(String userName) async {
     emit(LoadingUserProfileState());
