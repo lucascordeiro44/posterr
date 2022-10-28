@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:posterr/core/error/errors.dart';
-import 'package:posterr/modules/post/datasources/post.datasource.dart';
+import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
 import 'package:posterr/modules/post/presenter/store/post.store.dart';
@@ -40,17 +40,17 @@ class PostRepositoryImpl implements IPostsRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, bool>> createRepost(int postId) async {
-    try {
-      final post = await getPost(postId);
-      post.fold((l) => null, (r) => r.reposts.);
-      final repost = 
-      return right(r);
-    } oncatch (e) {
-      return left(PostFailure(message: e.toString()));
-    }
-  }
+  // @override
+  // Future<Either<Failure, bool>> createRepost(int postId) async {
+  //   try {
+  //     final post = await getPost(postId);
+  //     post.fold((l) => null, (r) => r.reposts.);
+  //     final repost =
+  //     return right(r);
+  //   } oncatch (e) {
+  //     return left(PostFailure(message: e.toString()));
+  //   }
+  // }
 
   @override
   Future<Either<Failure, Post>> getPost(int postId) async {

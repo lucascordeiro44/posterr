@@ -6,5 +6,5 @@ abstract class IPostsRepository {
   Future<Either<Failure, Post>> getPost(int postId);
   Future<Either<Failure, List<Post>>> getPosts();
   Future<Either<Failure, bool>> createPost(String text);
-  Future<Either<Failure, bool>> createRepost(int postId);
+  // Future<Either<Failure, bool>> createRepost(int postId);
 }
