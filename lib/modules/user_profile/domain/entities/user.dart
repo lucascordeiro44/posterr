@@ -6,7 +6,7 @@ import 'package:posterr/core/error/formats.dart';
 part 'user.g.dart';
 
 @HiveType(typeId: 1)
-class User extends Equatable {
+class User extends HiveObject {
   @HiveField(0)
   final String username;
   @HiveField(1)
@@ -16,12 +16,9 @@ class User extends Equatable {
 
   String get dateJoined => formatDate(joinedDate);
 
-  const User({
+  User({
     required this.username,
     required this.fullName,
     required this.joinedDate,
   });
-
-  @override
-  List<Object?> get props => [username, joinedDate];
 }

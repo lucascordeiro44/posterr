@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
 import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
 
@@ -12,6 +13,7 @@ class UserProfileStore extends ValueNotifier<UserProfileState> {
 
   User? user;
 
+  Box<User> get getUserBox => Hive.box('users');
   User get getLoggedUser => user!;
 
   Future<void> login(String userName) async {

@@ -22,4 +22,17 @@ void main() {
     //assert
     expect(result, Right(post));
   });
+
+  test('Should test if repository create one repost', () async {
+    //arrange
+    when((() => postDatasource.createRepost(any())))
+        .thenAnswer((_) async => true);
+
+    //act
+    final result =
+        await PostRepositoryImpl(postDatasource, useStore).createRepost(post);
+
+    //assert
+    expect(result, const Right(true));
+  });
 }

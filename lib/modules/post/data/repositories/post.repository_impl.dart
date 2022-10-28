@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive/hive.dart';
 import 'package:posterr/core/error/errors.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
-import 'package:posterr/modules/post/presenter/store/post.store.dart';
+import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 
 class PostRepositoryImpl implements IPostsRepository {
@@ -26,13 +26,18 @@ class PostRepositoryImpl implements IPostsRepository {
   @override
   Future<Either<Failure, bool>> createPost(String text) async {
     try {
-      final user = userStore.getLoggedUser;
+      User user = userStore.getLoggedUser;
       final posts = await getPosts();
       final postLength = posts.fold(
           (l) => throw Exception('Fail when get posts to see the length'),
           (r) => r.length);
+      //I could make some adapter here but in this case don´t need because the Hive already have a adapter generator.
       final post = Post(
-          id: postLength.toString(), text: text, user: user, totalComments: 0);
+          id: postLength.toString(),
+          text: text,
+          assignedToUser: HiveList(userStore.getUserBox),
+          totalComments: 0);
+      post.assignedToUser.add(user);
       final result = await datasource.createPost(post);
       return right(result);
     } catch (e) {
@@ -66,5 +71,11 @@ class PostRepositoryImpl implements IPostsRepository {
     } catch (e) {
       return left(PostFailure(message: e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, bool>> createRepost(Post post) {
+    // TODO: implement createRepost
+    throw UnimplementedError();
   }
 }

@@ -104,7 +104,9 @@ class _HomePageState extends State<HomePage> {
           return Column(
             children: [
               ListTile(
-                title: Text(post.user.fullName),
+                title: Text(post.assignedToUser
+                    .firstWhere((e) => e.username == 'lucascordeiro')
+                    .fullName),
                 subtitle: Text(post.text),
               )
             ],

@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
@@ -6,6 +7,7 @@ import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
 import 'package:posterr/modules/user_profile/data/datasources/user.datasource.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
+import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 
 final testUserFormatDate = User(
     fullName: 'Lucas Cordeiro',
@@ -16,8 +18,10 @@ final post = Post(
   id: '1',
   text: 'Mock Post test',
   totalComments: 0,
-  user: user,
+  assignedToUser: HiveList(Modular.get<UserProfileStore>().getUserBox),
 );
+
+// final repost = Repost(id: 1, post: post, assignedToUse: user);
 
 final user = User(
     fullName: 'Lucas Cordeiro',

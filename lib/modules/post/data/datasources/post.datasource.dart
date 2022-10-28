@@ -6,6 +6,7 @@ abstract class IPostDatasource {
   Future<List<Post>> getPosts();
   Future<Post?> getPost(int postId);
   Future<bool> createPost(Post post);
+  Future<bool> createRepost(Post post);
 }
 
 class PostDatasource implements IPostDatasource {
@@ -43,5 +44,11 @@ class PostDatasource implements IPostDatasource {
     } catch (e) {
       throw PostException(message: e.toString());
     }
+  }
+
+  @override
+  Future<bool> createRepost(Post post) {
+    // TODO: implement createRepost
+    throw UnimplementedError();
   }
 }
