@@ -15,9 +15,9 @@ final testUserFormatDate = User(
     joinedDate: DateTime(2022, 10, 18));
 
 final post = Post(
-  id: '1',
-  text: 'Mock Post test',
-  totalComments: 0,
+  id: 1,
+  title: 'Mock Post title',
+  text: 'Mock Post text',
   assignedToUser: HiveList(Modular.get<UserProfileStore>().getUserBox),
 );
 

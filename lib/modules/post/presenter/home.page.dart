@@ -49,41 +49,29 @@ class _HomePageState extends State<HomePage> {
                 // alignment: WrapAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextFormField(
-                    controller: postStore.textController,
-                    autofocus: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                    maxLength: 10,
-                  ),
-                  MaterialButton(
-                      child: Wrap(
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: const [
-                          Text('Send Post '),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(
-                            Icons.send,
-                            size: 25,
-                          ),
-                        ],
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.blueAccent.withOpacity(0.5),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(50)),
                       ),
-                      onPressed: () async {
-                        if (postStore.formKey.currentState!.validate()) {
-                          await postStore
-                              .createPost(postStore.textController.text);
-                          setState(() {
-                            postStore.textController.clear();
-                          });
+                      controller: postStore.textController,
+                      autofocus: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
                         }
-                      }),
+                        return null;
+                      },
+                      maxLength: 777,
+                    ),
+                  ),
+                  _sendButton()
                 ],
               ),
             ),
@@ -110,9 +98,7 @@ class _HomePageState extends State<HomePage> {
           return Column(
             children: [
               ListTile(
-                title: Text(post.assignedToUser
-                    .firstWhere((e) => e.username == 'lucascordeiro')
-                    .fullName),
+                title: Text(post.title),
                 subtitle: Text(post.text),
               )
             ],
@@ -126,6 +112,38 @@ class _HomePageState extends State<HomePage> {
         color: Colors.white,
         child: Text(state.message),
       );
+    }
+  }
+
+  _sendButton() {
+    return MaterialButton(
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: const [
+            Text('Send Post'),
+            SizedBox(
+              width: 8,
+            ),
+            Icon(
+              Icons.send,
+              color: Colors.redAccent,
+              size: 28,
+            ),
+          ],
+        ),
+        onPressed: () async {
+          _onClickSendPost();
+        });
+  }
+
+  Future<void> _onClickSendPost() async {
+    if (postStore.formKey.currentState!.validate()) {
+      await postStore.createPost(
+          postStore.titleController.text, postStore.textController.text);
+      setState(() {
+        postStore.textController.clear();
+      });
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:posterr/main_module.dart';
 import 'package:posterr/mock.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
+import 'package:posterr/modules/user_profile/domain/usecases/get_posts_from_loggedUser.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
 
 import 'modules/user_profile/presenter/store/user_profile.store.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final SetUsersUsecase setUsersUsecase = Modular.get();
   final UserProfileStore userProfileStore = Modular.get();
+  final GetPostsFromLoggedUserUsecase getPostsUsecase = Modular.get();
 
   @override
   void initState() {
@@ -38,8 +40,9 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  _login() {
-    userProfileStore.login('lucascordeiro');
+  _login() async {
+  await userProfileStore.login('mariacordeiro');
+   await getPostsUsecase.call(userProfileStore.getLoggedUser);
   }
 
   @override

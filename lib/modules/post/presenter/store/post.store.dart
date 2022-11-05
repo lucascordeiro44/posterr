@@ -6,6 +6,7 @@ import 'package:posterr/modules/post/presenter/states/post.state.dart';
 class PostStore extends ValueNotifier<PostState> {
   final IGetPostsUsecase usecase;
   final ICreatePostUsecase createUsecase;
+  TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   PostStore(this.usecase, this.createUsecase) : super(EmptyPostState([]));
@@ -23,8 +24,8 @@ class PostStore extends ValueNotifier<PostState> {
     emit(newState);
   }
 
-  Future<void> createPost(String text) async {
-    await createUsecase.call(text);
+  Future<void> createPost(String title, String text) async {
+    await createUsecase.call(title, text);
     await fetchPosts();
   }
 }

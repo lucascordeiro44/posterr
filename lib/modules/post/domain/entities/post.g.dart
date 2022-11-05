@@ -17,9 +17,9 @@ class PostAdapter extends TypeAdapter<Post> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Post(
-      id: fields[0] as String,
+      id: fields[0] as int,
       assignedToUser: (fields[1] as HiveList).castHiveList(),
-      totalComments: fields[2] as int,
+      title: fields[2] as String,
       text: fields[3] as String,
     );
   }
@@ -33,7 +33,7 @@ class PostAdapter extends TypeAdapter<Post> {
       ..writeByte(1)
       ..write(obj.assignedToUser)
       ..writeByte(2)
-      ..write(obj.totalComments)
+      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.text);
   }

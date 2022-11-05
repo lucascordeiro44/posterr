@@ -18,6 +18,10 @@ class SetUserException extends Failure {
   SetUserException({required super.message, super.stackTrace});
 }
 
+class GetPostsException extends Failure {
+  GetPostsException({required super.message, super.stackTrace});
+}
+
 class GetUserException extends Failure {
   GetUserException({required super.message, super.stackTrace});
 }

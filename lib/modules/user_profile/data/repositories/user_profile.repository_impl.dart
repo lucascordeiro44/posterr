@@ -1,3 +1,4 @@
+import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/user_profile/data/datasources/user.datasource.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/core/error/errors.dart';
@@ -36,6 +37,16 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
       return right(result);
     } on UserException catch (e, s) {
       return left(SetUserException(message: e.message, stackTrace: s));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Post>>> getPostsFromLoggedUser(User user) async {
+    try {
+      datasource.getPostsFromLoggedUser(user);
+      return right(<Post>[]);
+    } on UserException catch (e, s) {
+      return left(GetPostsException(message: e.message, stackTrace: s));
     }
   }
 }

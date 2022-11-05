@@ -22,7 +22,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       appBar: AppBar(title: const Text('UserProfile')),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => Modular.to.navigate('/post/home_page'),
+          onPressed: () => Modular.to.pushNamed('/post/home_page'),
           child: const Icon(Icons.add)),
       body: _body(context),
     );

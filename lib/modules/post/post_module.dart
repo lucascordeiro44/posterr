@@ -19,7 +19,7 @@ class PostModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         //Box
-        Bind.singleton<Box<Post>>((i) => Hive.box('posts')),
+        Bind.lazySingleton<Box<Post>>((i) => Hive.box('posts')),
         //Stores
         Bind.singleton((i) => PostStore(i(), i())),
 

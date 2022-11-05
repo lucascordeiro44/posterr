@@ -24,7 +24,7 @@ class PostRepositoryImpl implements IPostsRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> createPost(String text) async {
+  Future<Either<Failure, bool>> createPost(String title, String text) async {
     try {
       User user = userStore.getLoggedUser;
       final posts = await getPosts();
@@ -33,10 +33,11 @@ class PostRepositoryImpl implements IPostsRepository {
           (r) => r.length);
       //I could make some adapter here but in this case don´t need because the Hive already have a adapter generator.
       final post = Post(
-          id: postLength.toString(),
-          text: text,
-          assignedToUser: HiveList(userStore.getUserBox),
-          totalComments: 0);
+        id: postLength,
+        title: 'Title Test',
+        text: text,
+        assignedToUser: HiveList(userStore.getUserBox),
+      );
       post.assignedToUser.add(user);
       final result = await datasource.createPost(post);
       return right(result);
