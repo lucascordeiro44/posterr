@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:posterr/main_module.dart';
 import 'package:posterr/modules/post/data/repositories/post.repository_impl.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
+import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
 import 'package:posterr/modules/post/domain/usecases/create_post.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/get_posts.usecase.dart';
@@ -17,6 +18,8 @@ class PostModule extends Module {
 
   @override
   List<Bind<Object>> get binds => [
+        //Box
+        Bind.singleton<Box<Post>>((i) => Hive.box('posts')),
         //Stores
         Bind.singleton((i) => PostStore(i(), i())),
 
@@ -28,7 +31,7 @@ class PostModule extends Module {
         Bind.factory<IGetPostsUsecase>((i) => GetPostsUsecase(i())),
 
         //datasources
-        Bind.factory<IPostDatasource>((i) => PostDatasource(Hive.box('posts')))
+        Bind.factory<IPostDatasource>((i) => PostDatasource(i()))
       ];
 
   @override

@@ -2,6 +2,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:posterr/core/error/formats.dart';
+import 'package:posterr/modules/post/domain/entities/post.dart';
 
 part 'user.g.dart';
 
@@ -13,6 +14,8 @@ class User extends HiveObject {
   final DateTime joinedDate;
   @HiveField(2)
   final String fullName;
+  // @HiveField(3)
+  // final HiveList<Post>? posts;
 
   String get dateJoined => formatDate(joinedDate);
 

@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:posterr/modules/post/post_module.dart';
 import 'package:posterr/modules/user_profile/data/datasources/user.datasource.dart';
 import 'package:posterr/modules/user_profile/data/repositories/user_profile.repository_impl.dart';
+import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_users.usecase.dart';
@@ -15,12 +16,14 @@ class MainModule extends Module {
   // Dependency injection
   @override
   List<Bind<Object>> get binds => [
+        //Box user
+        Bind.lazySingleton<Box<User>>((i) => Hive.box('users')),
+
         //store
         Bind.lazySingleton((i) => UserProfileStore(i())),
 
         //datasources
-        Bind.factory<IUserDatasource>(
-            (i) => UserDatasource(usersBox: Hive.box('users'))),
+        Bind.factory<IUserDatasource>((i) => UserDatasource(usersBox: i())),
 
         //Repositorys
         Bind.factory<IUserProfileRepository>(

@@ -33,7 +33,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   setUpInitialUsers() async {
-    await setUsersUsecase.call(users);
+    if (userProfileStore.getUserBox.isEmpty) {
+      await setUsersUsecase.call(users);
+    }
   }
 
   _login() {

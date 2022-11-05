@@ -2,9 +2,10 @@ import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 
 final List<User> users = [
   User(
-      fullName: 'Lucas Cordeiro',
-      username: 'lucascordeiro',
-      joinedDate: DateTime.now()),
+    fullName: 'Lucas Cordeiro',
+    username: 'lucascordeiro',
+    joinedDate: DateTime.now(),
+  ),
   User(
       fullName: 'Maria Cordeiro',
       username: 'mariacordeiro',
