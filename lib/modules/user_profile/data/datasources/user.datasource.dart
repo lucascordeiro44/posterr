@@ -21,7 +21,6 @@ class UserDatasource implements IUserDatasource {
       for (var user in users) {
         usersBox.put(user.username, user);
       }
-      await Future.delayed(const Duration(seconds: 1));
       return true;
     } catch (e, s) {
       throw UserException(message: e.toString(), stackTrace: s);
@@ -31,7 +30,6 @@ class UserDatasource implements IUserDatasource {
   @override
   Future<List<User>> getUsers() async {
     try {
-      await Future.delayed(const Duration(seconds: 1));
       List<User> users = [];
       final result = usersBox.values;
       users.addAll(result);
@@ -44,7 +42,6 @@ class UserDatasource implements IUserDatasource {
   @override
   Future<User> getUser(String key) async {
     try {
-      await Future.delayed(const Duration(seconds: 1));
       return usersBox.get(key)!;
     } catch (e, s) {
       throw UserException(message: e.toString(), stackTrace: s);

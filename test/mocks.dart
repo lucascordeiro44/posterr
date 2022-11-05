@@ -1,13 +1,13 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:posterr/core/stores/auth_store.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
 import 'package:posterr/modules/user_profile/data/datasources/user.datasource.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
-import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 
 final testUserFormatDate = User(
     fullName: 'Lucas Cordeiro',
@@ -18,7 +18,7 @@ final post = Post(
   id: 1,
   title: 'Mock Post title',
   text: 'Mock Post text',
-  assignedToUser: HiveList(Modular.get<UserProfileStore>().getUserBox),
+  assignedToUser: HiveList(Modular.get<AuthStore>().getUserBox),
 );
 
 // final repost = Repost(id: 1, post: post, assignedToUse: user);

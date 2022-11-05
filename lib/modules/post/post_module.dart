@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
-import 'package:posterr/main_module.dart';
+import 'package:posterr/app_module.dart';
 import 'package:posterr/modules/post/data/repositories/post.repository_impl.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
@@ -37,7 +37,7 @@ class PostModule extends Module {
   @override
   List<ModularRoute> get routes => [
         // App Initial Route
-        ChildRoute('/home_page', child: (context, args) => const HomePage()),
+        ChildRoute('/home', child: (context, args) => const HomePage()),
         // Modules Routes
       ];
 }

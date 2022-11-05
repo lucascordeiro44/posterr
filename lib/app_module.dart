@@ -1,5 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:posterr/core/pages/splash_screen.page.dart';
+import 'package:posterr/modules/user_profile/presenter/pages/user_profile.page.dart';
+import 'package:posterr/modules/user_profile/presenter/store/choose_users.store.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/post_module.dart';
 import 'package:posterr/modules/user_profile/data/datasources/user.datasource.dart';
@@ -10,23 +13,22 @@ import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.us
 import 'package:posterr/modules/user_profile/domain/usecases/get_posts_from_loggedUser.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_users.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
-import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
-import 'package:posterr/modules/user_profile/presenter/pages/user_profile.page.dart';
+import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/modules/user_profile/presenter/pages/choose_user.page.dart';
 
 /// It's the main App module. Each module should have your binds (dependencys) and routes
 class MainModule extends Module {
-  @override
   // Dependency injection
   @override
   List<Bind<Object>> get binds => [
         //Box user
         Bind.lazySingleton<Box<User>>((i) => Hive.box('users')),
-
         //Box Posts
         Bind.lazySingleton<Box<Post>>((i) => Hive.box('posts')),
 
         //store
-        Bind.lazySingleton((i) => UserProfileStore(i())),
+        Bind.lazySingleton((i) => AuthStore(i())),
+        Bind.lazySingleton((i) => ChooseUserStore(i())),
 
         //datasources
         Bind.lazySingleton<IUserDatasource>(
@@ -48,7 +50,10 @@ class MainModule extends Module {
   @override
   List<ModularRoute> get routes => [
         // App Initial Route
-        ChildRoute('/', child: (context, args) => const UserProfilePage()),
+        ChildRoute('/', child: (context, args) => const SplashScreenPage()),
+        ChildRoute('/choose_user',
+            child: (context, args) => const ChooseUserPage()),
+        ChildRoute('/user', child: (context, args) => const UserProfilePage()),
         ModuleRoute('/post', module: PostModule())
         // Modules Routes
       ];

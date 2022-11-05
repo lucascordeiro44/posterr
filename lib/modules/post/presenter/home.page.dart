@@ -24,12 +24,54 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Posterr')),
+      appBar: AppBar(title: const Text('Posterr'), actions: [
+        IconButton(
+          onPressed: () => Modular.to.pushNamed('/user'),
+          icon: const Icon(Icons.person),
+          iconSize: 40,
+        )
+      ]),
       body: _body(context),
       floatingActionButton: FloatingActionButton(
           onPressed: () => _configurandoModalBottomSheet(context),
           child: const Icon(Icons.add)),
     );
+  }
+
+  _body(BuildContext context) {
+    final store = context.watch<PostStore>();
+    final state = store.value;
+    if (state is LoadingPostState) {
+      return const CircularProgressIndicator();
+    }
+
+    if (state is SuccessPostState) {
+      if (state.posts.isEmpty) {
+        return const Text('Sem Posts');
+      }
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: state.posts.length,
+        itemBuilder: (context, index) {
+          Post post = state.posts[index];
+          return Column(
+            children: [
+              ListTile(
+                title: Text(post.title),
+                subtitle: Text(post.text),
+              )
+            ],
+          );
+        },
+      );
+    }
+
+    if (state is ErrorPostState) {
+      return Container(
+        color: Colors.white,
+        child: Text(state.message),
+      );
+    }
   }
 
   void _configurandoModalBottomSheet(context) {
@@ -77,42 +119,6 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         });
-  }
-
-  _body(BuildContext context) {
-    final store = context.watch<PostStore>();
-    final state = store.value;
-    if (state is LoadingPostState) {
-      return const CircularProgressIndicator();
-    }
-
-    if (state is SuccessPostState) {
-      if (state.posts.isEmpty) {
-        return const Text('Sem Posts');
-      }
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: state.posts.length,
-        itemBuilder: (context, index) {
-          Post post = state.posts[index];
-          return Column(
-            children: [
-              ListTile(
-                title: Text(post.title),
-                subtitle: Text(post.text),
-              )
-            ],
-          );
-        },
-      );
-    }
-
-    if (state is ErrorPostState) {
-      return Container(
-        color: Colors.white,
-        child: Text(state.message),
-      );
-    }
   }
 
   _sendButton() {

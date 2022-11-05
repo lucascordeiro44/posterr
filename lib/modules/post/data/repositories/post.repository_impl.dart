@@ -5,11 +5,11 @@ import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
-import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
+import 'package:posterr/core/stores/auth_store.dart';
 
 class PostRepositoryImpl implements IPostsRepository {
   IPostDatasource datasource;
-  UserProfileStore userStore;
+  AuthStore userStore;
 
   PostRepositoryImpl(this.datasource, this.userStore);
 
@@ -66,7 +66,7 @@ class PostRepositoryImpl implements IPostsRepository {
         throw NullPostException();
       }
       return right(post);
-    } on NullPostException catch (e) {
+    } on NullPostException{
       return left(
           NullPostFailure(message: 'Not find any post with this postId'));
     } catch (e) {

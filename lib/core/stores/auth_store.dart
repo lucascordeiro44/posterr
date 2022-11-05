@@ -4,11 +4,11 @@ import 'package:hive/hive.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
 import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
 
-import '../../domain/entities/user.dart';
+import '../../modules/user_profile/domain/entities/user.dart';
 
-class UserProfileStore extends ValueNotifier<UserProfileState> {
+class AuthStore extends ValueNotifier<UserProfileState> {
   final IGetCurrentUserUsecase usecase;
-  UserProfileStore(this.usecase) : super(InitialUserProfileState());
+  AuthStore(this.usecase) : super(InitialUserProfileState());
 
   void emit(UserProfileState newState) => value = newState;
 

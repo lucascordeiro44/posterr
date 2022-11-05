@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
-import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
+import 'package:posterr/core/stores/auth_store.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -11,7 +11,7 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  final UserProfileStore userProfileStore = Modular.get();
+  final AuthStore authStore = Modular.get();
   @override
   void initState() {
     super.initState();
@@ -20,16 +20,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('UserProfile')),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () => Modular.to.pushNamed('/post/home_page'),
-          child: const Icon(Icons.add)),
+      appBar: AppBar(title: const Text('User Profile')),
       body: _body(context),
     );
   }
 
   _body(BuildContext context) {
-    final store = context.watch<UserProfileStore>();
+    final store = context.watch<AuthStore>();
     final state = store.value;
 
     if (state is LoadingUserProfileState) {
@@ -40,7 +37,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       return ListView(
         shrinkWrap: true,
         children: [
-          Text('Nome: ${state.user.fullName}',
+          Text('Name: ${state.user.fullName}',
               style: const TextStyle(fontSize: 18, color: Colors.black)),
           Text('Joined Date: ${state.user.joinedDate}',
               style: const TextStyle(fontSize: 14))
