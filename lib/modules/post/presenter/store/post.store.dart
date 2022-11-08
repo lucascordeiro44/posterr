@@ -1,31 +1,41 @@
 import 'package:flutter/cupertino.dart';
+import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/usecases/create_post.usecase.dart';
-import 'package:posterr/modules/post/domain/usecases/get_posts.usecase.dart';
+import 'package:posterr/modules/post/domain/usecases/create_repost.usecase.dart';
+import 'package:posterr/modules/post/domain/usecases/get_home_content.usecase.dart';
 import 'package:posterr/modules/post/presenter/states/post.state.dart';
 
-class PostStore extends ValueNotifier<PostState> {
-  final IGetPostsUsecase usecase;
+class PostStore extends ValueNotifier<HomeContentState> {
+  final IGetHomeContentUsecase getHomeContentUsecase;
   final ICreatePostUsecase createUsecase;
+  final ICreateRepostUsecase createRepostUsecase;
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  PostStore(this.usecase, this.createUsecase) : super(EmptyPostState([]));
+  PostStore(
+      this.getHomeContentUsecase, this.createUsecase, this.createRepostUsecase)
+      : super(InitialHomeContentState([]));
 
-  void emit(PostState newState) => value = newState;
+  void emit(HomeContentState newState) => value = newState;
 
-  Future<void> fetchPosts() async {
-    emit(LoadingPostState());
-    final result = await usecase.call();
+  Future<void> fetchHomeContent() async {
+    emit(LoadingHomeContentState());
+    final result = await getHomeContentUsecase.call();
     final newState = result.fold((l) {
-      return ErrorPostState(l.message);
+      return ErrorHomeContentState(l.message);
     }, (r) {
-      return SuccessPostState(r);
+      return SuccessHomeContentState(r);
     });
     emit(newState);
   }
 
   Future<void> createPost(String title, String text) async {
     await createUsecase.call(title, text);
-    await fetchPosts();
+    await fetchHomeContent();
+  }
+
+  Future<void> createRepost(Post post) async {
+    await createRepostUsecase.call(post);
+    await fetchHomeContent();
   }
 }

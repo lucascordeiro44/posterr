@@ -32,6 +32,14 @@ class PostFailure extends Failure {
   PostFailure({required super.message});
 }
 
+class RepostFailure extends Failure {
+  RepostFailure({required super.message});
+}
+
+class HomeContentFailure extends Failure {
+  HomeContentFailure({required super.message});
+}
+
 class NullPostFailure extends Failure {
   NullPostFailure({required super.message});
 }
@@ -42,4 +50,12 @@ class ErrorGetLoggedUser extends Failure {
 
 class PostException extends IException {
   PostException({required super.message});
+}
+
+class RepostException extends IException {
+  RepostException({required super.message});
+}
+
+class GetHomeContentException extends IException {
+  GetHomeContentException({required super.message});
 }

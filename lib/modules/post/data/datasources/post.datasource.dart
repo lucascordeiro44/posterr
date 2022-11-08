@@ -1,17 +1,20 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posterr/core/error/errors.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
+import 'package:posterr/modules/post/domain/entities/repost.dart';
 
 abstract class IPostDatasource {
   Future<List<Post>> getPosts();
   Future<Post?> getPost(int postId);
   Future<bool> createPost(Post post);
-  Future<bool> createRepost(Post post);
+  Future<bool> createRepost(Repost post);
+  Future<List<Repost>> getReposts();
 }
 
 class PostDatasource implements IPostDatasource {
   Box<Post> postsBox;
-  PostDatasource(this.postsBox);
+  Box<Repost> repostBox;
+  PostDatasource(this.postsBox, this.repostBox);
 
   @override
   Future<Post?> getPost(int postId) async {
@@ -26,7 +29,7 @@ class PostDatasource implements IPostDatasource {
   @override
   Future<List<Post>> getPosts() async {
     try {
-      await Future.delayed(const Duration(microseconds: 500));
+      await Future.delayed(const Duration(microseconds: 300));
       List<Post> posts = [];
       final result = postsBox.values;
       posts.addAll(result);
@@ -47,8 +50,24 @@ class PostDatasource implements IPostDatasource {
   }
 
   @override
-  Future<bool> createRepost(Post post) {
-    // TODO: implement createRepost
-    throw UnimplementedError();
+  Future<bool> createRepost(Repost repost) async {
+    try {
+      repostBox.add(repost);
+      return true;
+    } catch (e) {
+      throw RepostException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<Repost>> getReposts() async {
+    try {
+      await Future.delayed(const Duration(microseconds: 300));
+      final List<Repost> result = repostBox.values.toList();
+      return result;
+    } catch (e) {
+      throw PostException(message: e.toString());
+    }
   }
 }
+

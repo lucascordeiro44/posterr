@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/styles.dart';
+import 'package:posterr/core/widgets/card_repost_widget.dart';
+import 'package:posterr/core/widgets/card_widget.dart';
+import 'package:posterr/core/models/content_item.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
+import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/post/presenter/states/post.state.dart';
-
+import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'store/post.store.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,10 +21,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PostStore postStore = Modular.get();
+  final authStore = Modular.get<AuthStore>();
   @override
   void initState() {
     super.initState();
-    postStore.fetchPosts();
+    postStore.fetchHomeContent();
   }
 
   @override
@@ -33,6 +40,7 @@ class _HomePageState extends State<HomePage> {
       ]),
       body: _body(context),
       floatingActionButton: FloatingActionButton(
+          isExtended: true,
           onPressed: () => _configurandoModalBottomSheet(context),
           child: const Icon(Icons.add)),
     );
@@ -41,37 +49,68 @@ class _HomePageState extends State<HomePage> {
   _body(BuildContext context) {
     final store = context.watch<PostStore>();
     final state = store.value;
-    if (state is LoadingPostState) {
-      return const CircularProgressIndicator();
+    if (state is LoadingHomeContentState) {
+      return const Align(
+          alignment: Alignment.center, child: CircularProgressIndicator());
     }
 
-    if (state is SuccessPostState) {
-      if (state.posts.isEmpty) {
-        return const Text('Sem Posts');
+    if (state is SuccessHomeContentState) {
+      if (state.contents.isEmpty) {
+        return const Align(
+          alignment: Alignment.center,
+          child: Text('There is not post yet!', style: titleStyle),
+        );
       }
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: state.posts.length,
-        itemBuilder: (context, index) {
-          Post post = state.posts[index];
-          return Column(
-            children: [
-              ListTile(
-                title: Text(post.title),
-                subtitle: Text(post.text),
-              )
-            ],
-          );
-        },
-      );
+      return _listView(state);
     }
 
-    if (state is ErrorPostState) {
-      return Container(
-        color: Colors.white,
-        child: Text(state.message),
+    if (state is ErrorHomeContentState) {
+      return Align(
+        alignment: Alignment.center,
+        child: Text(state.message, style: titleStyle),
       );
     }
+  }
+
+  _listView(SuccessHomeContentState state) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: ListView.builder(
+        itemCount: state.contents.length,
+        itemBuilder: (context, index) {
+          ContentItem contentItem = state.contents[index];
+          if (contentItem.type == ContentType.post) {
+            Post post = contentItem.content;
+            return _postCard(post);
+          } else if (contentItem.type == ContentType.repost) {
+            Repost repost = contentItem.content;
+            return _repostCard(repost);
+          } else {
+            return const Text('Quote Post');
+          }
+        },
+      ),
+    );
+  }
+
+  _postCard(Post post) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+      child: AppCard(
+        post: post,
+        onClickRepost: () async => await postStore.createRepost(post),
+      ),
+    );
+  }
+
+  _repostCard(Repost repost) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+      child: AppCardRepost(
+        repost: repost,
+        loggedUser: authStore.getLoggedUser,
+      ),
+    );
   }
 
   void _configurandoModalBottomSheet(context) {
@@ -87,20 +126,21 @@ class _HomePageState extends State<HomePage> {
             child: Form(
               key: postStore.formKey,
               child: Column(
-                // crossAxisAlignment: WrapCrossAlignment.center,
-                // alignment: WrapAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: TextFormField(
+                      keyboardType: TextInputType.multiline,
+                      minLines: 4,
+                      maxLines: 6,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.blueAccent.withOpacity(0.5),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(50)),
+                            borderRadius: BorderRadius.circular(20)),
                       ),
                       controller: postStore.textController,
                       autofocus: true,
@@ -139,7 +179,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         onPressed: () async {
-          _onClickSendPost();
+          _onClickSendPost().then((_) => Navigator.pop(context));
         });
   }
 

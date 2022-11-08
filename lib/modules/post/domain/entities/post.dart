@@ -6,17 +6,11 @@ part 'post.g.dart';
 @HiveType(typeId: 2)
 class Post extends HiveObject {
   @HiveField(0)
-  final int id;
+  final String postDate;
   @HiveField(1)
-  final HiveList<User> assignedToUser;
-  @HiveField(2)
-  final String title;
-  @HiveField(3)
   final String text;
+  @HiveField(2)
+  final HiveList<User> assignedToUser;
 
-  Post(
-      {required this.id,
-      required this.assignedToUser,
-      required this.title,
-      required this.text});
+  Post({required this.assignedToUser,required this.postDate, required this.text});
 }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:posterr/core/utils/formats.dart';
+import 'package:posterr/core/styles.dart';
+import 'package:posterr/core/widgets/circle_avatar.dart';
+import 'package:posterr/core/widgets/divider.dart';
 import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
 import 'package:posterr/core/stores/auth_store.dart';
 
@@ -34,13 +38,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
 
     if (state is SuccessUserProfileState) {
-      return ListView(
-        shrinkWrap: true,
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Name: ${state.user.fullName}',
-              style: const TextStyle(fontSize: 18, color: Colors.black)),
-          Text('Joined Date: ${state.user.joinedDate}',
-              style: const TextStyle(fontSize: 14))
+          _header(context, state),
+          _userContent(),
         ],
       );
     }
@@ -51,5 +53,55 @@ class _UserProfilePageState extends State<UserProfilePage> {
         child: Text(state.message),
       );
     }
+  }
+
+  Stack _header(BuildContext context, SuccessUserProfileState state) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          color: Colors.blueAccent.withOpacity(0.7),
+          height: MediaQuery.of(context).size.height / 3.3,
+        ),
+        Positioned.fill(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppCircleAvatar(
+                  maxRadius: 65, minRadius: 60, photo: state.user.photo),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 14, bottom: 8),
+                      child: Text(state.user.fullName, style: titleStyle),
+                    ),
+                    Text("Joined Date: ${state.user.dateJoined}",
+                        style: subtitleStyle),
+                  ]),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  _userContent() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Row(
+            children: const [Text('Historic', style: titleStyle)],
+          ),
+          AppDivider(
+            color: Colors.black54,
+          ),
+        ],
+      ),
+    );
   }
 }

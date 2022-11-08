@@ -2,6 +2,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/utils/formats.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
@@ -12,11 +13,11 @@ import 'package:posterr/modules/user_profile/domain/repositories/user_profile.re
 final testUserFormatDate = User(
     fullName: 'Lucas Cordeiro',
     username: 'lucascordeiro',
+    photo: 'https://picsum.photos/150/150',
     joinedDate: DateTime(2022, 10, 18));
 
 final post = Post(
-  id: 1,
-  title: 'Mock Post title',
+  postDate: formatPostDate(DateTime.now()),
   text: 'Mock Post text',
   assignedToUser: HiveList(Modular.get<AuthStore>().getUserBox),
 );
@@ -26,24 +27,29 @@ final post = Post(
 final user = User(
     fullName: 'Lucas Cordeiro',
     username: 'lucascordeiro',
+    photo: 'https://picsum.photos/150/150',
     joinedDate: DateTime.now());
 
 final List<User> users = [
   User(
       fullName: 'Lucas Cordeiro',
       username: 'lucascordeiro',
+      photo: 'https://picsum.photos/135/135',
       joinedDate: DateTime.now()),
   User(
       fullName: 'Maria Cordeiro',
       username: 'mariacordeiro',
+      photo: 'https://picsum.photos/160/160',
       joinedDate: DateTime.now()),
   User(
       fullName: 'Jose Cordeiro',
       username: 'josecordeiro',
+      photo: 'https://picsum.photos/132/132',
       joinedDate: DateTime.now()),
   User(
       fullName: 'Juliano Cordeiro',
       username: 'julianocordeiro',
+      photo: 'https://picsum.photos/140/140',
       joinedDate: DateTime.now()),
 ];
 

@@ -17,25 +17,22 @@ class PostAdapter extends TypeAdapter<Post> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Post(
-      id: fields[0] as int,
-      assignedToUser: (fields[1] as HiveList).castHiveList(),
-      title: fields[2] as String,
-      text: fields[3] as String,
+      assignedToUser: (fields[2] as HiveList).castHiveList(),
+      postDate: fields[0] as String,
+      text: fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Post obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.assignedToUser)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
-      ..write(obj.text);
+      ..writeByte(0)
+      ..write(obj.postDate)
+      ..writeByte(1)
+      ..write(obj.text)
+      ..writeByte(2)
+      ..write(obj.assignedToUser);
   }
 
   @override

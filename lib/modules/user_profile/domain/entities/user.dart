@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:hive/hive.dart';
-import 'package:posterr/core/error/formats.dart';
-
+import 'package:posterr/core/utils/formats.dart';
 
 part 'user.g.dart';
 
@@ -14,14 +13,15 @@ class User extends HiveObject {
   final DateTime joinedDate;
   @HiveField(2)
   final String fullName;
-  // @HiveField(3)
-  // final HiveList<Post>? posts;
+  @HiveField(3)
+  final String photo;
 
-  String get dateJoined => formatDate(joinedDate);
+  String get dateJoined => formatDateJoinedDate(joinedDate);
 
   User({
     required this.username,
     required this.fullName,
     required this.joinedDate,
+    required this.photo,
   });
 }

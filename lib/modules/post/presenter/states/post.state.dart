@@ -1,19 +1,20 @@
-import 'package:posterr/modules/post/domain/entities/post.dart';
+import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
+import 'package:posterr/core/models/content_item.dart';
 
-abstract class PostState {}
+abstract class HomeContentState {}
 
-class SuccessPostState implements PostState {
-  final List<Post> posts;
-  SuccessPostState(this.posts);
+class SuccessHomeContentState implements HomeContentState {
+  final List<ContentItem> contents;
+  SuccessHomeContentState(this.contents);
 }
 
-class EmptyPostState extends SuccessPostState {
-  EmptyPostState(List<Post> posts) : super([]);
+class InitialHomeContentState extends SuccessHomeContentState {
+  InitialHomeContentState(super.contents);
 }
 
-class LoadingPostState extends PostState {}
+class LoadingHomeContentState extends HomeContentState {}
 
-class ErrorPostState extends PostState {
+class ErrorHomeContentState extends HomeContentState {
   final String message;
-  ErrorPostState(this.message);
+  ErrorHomeContentState(this.message);
 }

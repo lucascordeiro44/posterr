@@ -1,41 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'repost.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserAdapter extends TypeAdapter<User> {
+class RepostAdapter extends TypeAdapter<Repost> {
   @override
-  final int typeId = 1;
+  final int typeId = 3;
 
   @override
-  User read(BinaryReader reader) {
+  Repost read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return User(
-      username: fields[0] as String,
-      fullName: fields[2] as String,
-      joinedDate: fields[1] as DateTime,
-      photo: fields[3] as String,
+    return Repost(
+      repostDate: fields[0] as String,
+      assignedToUser: (fields[1] as HiveList).castHiveList(),
+      relatedPost: (fields[2] as HiveList).castHiveList(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, User obj) {
+  void write(BinaryWriter writer, Repost obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.username)
-      ..writeByte(1)
-      ..write(obj.joinedDate)
-      ..writeByte(2)
-      ..write(obj.fullName)
       ..writeByte(3)
-      ..write(obj.photo);
+      ..writeByte(0)
+      ..write(obj.repostDate)
+      ..writeByte(1)
+      ..write(obj.assignedToUser)
+      ..writeByte(2)
+      ..write(obj.relatedPost);
   }
 
   @override
@@ -44,7 +41,7 @@ class UserAdapter extends TypeAdapter<User> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserAdapter &&
+      other is RepostAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
