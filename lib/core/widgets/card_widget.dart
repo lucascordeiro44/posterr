@@ -6,7 +6,12 @@ import 'package:posterr/modules/post/domain/entities/post.dart';
 class AppCard extends StatelessWidget {
   final Post post;
   final Function onClickRepost;
-  const AppCard({super.key, required this.post, required this.onClickRepost});
+  final Function onClickQuotePost;
+  const AppCard(
+      {super.key,
+      required this.post,
+      required this.onClickRepost,
+      required this.onClickQuotePost});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +77,9 @@ class AppCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      onClickQuotePost();
+                    },
                     icon: const Icon(
                       Icons.reply,
                       color: Colors.blueAccent,

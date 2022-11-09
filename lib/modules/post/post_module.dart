@@ -4,9 +4,11 @@ import 'package:posterr/app_module.dart';
 import 'package:posterr/modules/post/data/repositories/post.repository_impl.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
+import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
 import 'package:posterr/modules/post/domain/usecases/create_post.usecase.dart';
+import 'package:posterr/modules/post/domain/usecases/create_quote_post.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/create_repost.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/get_home_content.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/get_posts.usecase.dart';
@@ -24,19 +26,23 @@ class PostModule extends Module {
         //Box
         Bind.lazySingleton<Box<Post>>((i) => Hive.box('posts')),
         Bind.lazySingleton<Box<Repost>>((i) => Hive.box('reposts')),
+        Bind.lazySingleton<Box<QuotePost>>((i) => Hive.box('quotePosts')),
         //Stores
-        Bind.lazySingleton((i) => PostStore(i(), i(), i())),
+        Bind.lazySingleton((i) => PostStore(i(), i(), i(), i())),
         //repositorys
         Bind.lazySingleton<IPostsRepository>(
             (i) => PostRepositoryImpl(i(), i(), i())),
         //usecases
         Bind.lazySingleton<ICreatePostUsecase>((i) => CreatePostUsecase(i())),
-        Bind.lazySingleton<IGetHomeContentUsecase>((i) => GetHomeContentUsecase(i())),
+        Bind.lazySingleton<IGetHomeContentUsecase>(
+            (i) => GetHomeContentUsecase(i())),
         Bind.lazySingleton<ICreateRepostUsecase>(
             (i) => CreateRepostUsecase(i())),
-        Bind.lazySingleton<IGetPostsUsecase>((i) => GetPostsUsecase(i())),
+        Bind.lazySingleton<ICreateQuotePostUsecase>(
+            (i) => CreateQuotePostUsecase(i())),
         //datasources
-        Bind.lazySingleton<IPostDatasource>((i) => PostDatasource(i(), i()))
+        Bind.lazySingleton<IPostDatasource>(
+            (i) => PostDatasource(i(), i(), i()))
       ];
 
   @override

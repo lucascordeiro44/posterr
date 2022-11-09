@@ -56,6 +56,15 @@ class RepostException extends IException {
   RepostException({required super.message});
 }
 
+class QuotePostFailure extends Failure {
+  QuotePostFailure({required super.message});
+}
+
+class QuotePostException extends IException {
+  QuotePostException({required super.message});
+}
+
+
 class GetHomeContentException extends IException {
   GetHomeContentException({required super.message});
 }

@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posterr/core/error/errors.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
+import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
 
 abstract class IPostDatasource {
@@ -9,12 +10,14 @@ abstract class IPostDatasource {
   Future<bool> createPost(Post post);
   Future<bool> createRepost(Repost post);
   Future<List<Repost>> getReposts();
+  Future<bool> createQuotePost(QuotePost quotePost);
 }
 
 class PostDatasource implements IPostDatasource {
   Box<Post> postsBox;
   Box<Repost> repostBox;
-  PostDatasource(this.postsBox, this.repostBox);
+  Box<QuotePost> quotePostsBox;
+  PostDatasource(this.postsBox, this.repostBox, this.quotePostsBox);
 
   @override
   Future<Post?> getPost(int postId) async {
@@ -60,6 +63,16 @@ class PostDatasource implements IPostDatasource {
   }
 
   @override
+  Future<bool> createQuotePost(QuotePost quotePost) async {
+    try {
+      quotePostsBox.add(quotePost);
+      return true;
+    } catch (e) {
+      throw RepostException(message: e.toString());
+    }
+  }
+
+  @override
   Future<List<Repost>> getReposts() async {
     try {
       await Future.delayed(const Duration(microseconds: 300));
@@ -70,4 +83,3 @@ class PostDatasource implements IPostDatasource {
     }
   }
 }
-

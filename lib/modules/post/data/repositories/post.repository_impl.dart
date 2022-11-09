@@ -5,6 +5,7 @@ import 'package:posterr/core/utils/formats.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/core/models/content_item.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
+import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
@@ -17,36 +18,17 @@ class PostRepositoryImpl implements IPostsRepository {
 
   PostRepositoryImpl(this.datasource, this.userStore, this.postBox);
 
-  @override
-  Future<Either<Failure, List<Post>>> getPosts() async {
-    try {
-      final result = await datasource.getPosts();
-      return right(result);
-    } catch (e) {
-      return left(PostFailure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<Repost>>> getReposts() async {
-    try {
-      final result = await datasource.getReposts();
-      return right(result);
-    } catch (e) {
-      return left(PostFailure(message: e.toString()));
-    }
-  }
+  User get _loggedUser =>  userStore.getLoggedUser;
 
   @override
   Future<Either<Failure, bool>> createPost(String title, String text) async {
     try {
-      User user = userStore.getLoggedUser;
       final post = Post(
         postDate: formatPostDate(DateTime.now()),
         text: text,
         assignedToUser: HiveList(userStore.getUserBox),
       );
-      post.assignedToUser.add(user);
+      post.assignedToUser.add(_loggedUser);
       final result = await datasource.createPost(post);
       return right(result);
     } catch (e) {
@@ -57,12 +39,11 @@ class PostRepositoryImpl implements IPostsRepository {
   @override
   Future<Either<Failure, bool>> createRepost(Post post) async {
     try {
-      User user = userStore.getLoggedUser;
       final repost = Repost(
           repostDate: formatPostDate(DateTime.now()),
           assignedToUser: HiveList(userStore.getUserBox),
           relatedPost: HiveList(postBox));
-      repost.assignedToUser.add(user);
+      repost.assignedToUser.add(_loggedUser);
       repost.relatedPost.add(post);
       final result = await datasource.createRepost(repost);
       return right(result);
@@ -94,6 +75,23 @@ class PostRepositoryImpl implements IPostsRepository {
       return right(result);
     } catch (e) {
       return left(HomeContentFailure(message: e.toString()));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, bool>> createQuotePost(Post post, String comment) async  {
+   try {
+      final quotePost = QuotePost(
+          comment: comment,
+          quotePostDate: formatPostDate(DateTime.now()),
+          assignedToUser: HiveList(userStore.getUserBox),
+          relatedPost: HiveList(postBox));
+      quotePost.assignedToUser.add(_loggedUser);
+      quotePost.relatedPost.add(post);
+      final result = await datasource.createQuotePost(quotePost);
+      return right(result);
+    } on QuotePostException catch (e) {
+      return left(QuotePostFailure(message: e.message));
     }
   }
 }

@@ -14,7 +14,7 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
         title: 'Posterr',
-        theme: ThemeData(primarySwatch: Colors.red),
+        theme: ThemeData(primarySwatch: Colors.blue),
         debugShowCheckedModeBanner: false,
         routeInformationParser: Modular.routeInformationParser,
         routerDelegate: Modular.routerDelegate);

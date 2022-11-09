@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:posterr/core/stores/auth_store.dart';
 import 'package:posterr/core/styles.dart';
+import 'package:posterr/core/widgets/card_quote_post.dart';
 import 'package:posterr/core/widgets/card_repost_widget.dart';
 import 'package:posterr/core/widgets/card_widget.dart';
 import 'package:posterr/core/models/content_item.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
+import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/post/presenter/states/post.state.dart';
 import 'store/post.store.dart';
@@ -40,7 +42,7 @@ class _HomePageState extends State<HomePage> {
       body: _body(context),
       floatingActionButton: FloatingActionButton(
           isExtended: true,
-          onPressed: () => _configurandoModalBottomSheet(context),
+          onPressed: () => _showBottomSheet(context: context),
           child: const Icon(Icons.add)),
     );
   }
@@ -85,7 +87,8 @@ class _HomePageState extends State<HomePage> {
             Repost repost = contentItem.content;
             return _repostCard(repost);
           } else {
-            return const Text('Quote Post');
+            QuotePost quote = contentItem.content;
+            return _quotePostCard(quote);
           }
         },
       ),
@@ -98,6 +101,8 @@ class _HomePageState extends State<HomePage> {
       child: AppCard(
         post: post,
         onClickRepost: () async => await postStore.createRepost(post),
+        onClickQuotePost: () async =>
+            _showBottomSheet(context: context, isQuotePost: true, post: post),
       ),
     );
   }
@@ -112,12 +117,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _configurandoModalBottomSheet(context) {
+  _quotePostCard(QuotePost quotePost) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+      child: AppCardQuotePost(
+        quotePost: quotePost,
+      ),
+    );
+  }
+
+  void _showBottomSheet({context, bool isQuotePost = false, Post? post}) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(22))),
         builder: (BuildContext bc) {
           return Padding(
             padding: EdgeInsets.only(
@@ -127,22 +141,36 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Text(
+                          isQuotePost ? 'Write a Quote Post' : 'Write a Post',
+                          style: titleStyle,
+                        ),
+                      ),
+                      _sendButton(post, isQuotePost),
+                    ],
+                  ),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: TextFormField(
                       keyboardType: TextInputType.multiline,
-                      minLines: 4,
-                      maxLines: 6,
+                      minLines: isQuotePost ? 1 : 4,
+                      maxLines: isQuotePost ? 3 : 6,
+                      textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.blueAccent.withOpacity(0.5),
+                        hintText: isQuotePost ? 'Add comment' : 'write a text',
+                        fillColor: Colors.blueAccent.withOpacity(0.2),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(20)),
                       ),
                       controller: postStore.textController,
-                      autofocus: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter some text';
@@ -152,7 +180,6 @@ class _HomePageState extends State<HomePage> {
                       maxLength: 777,
                     ),
                   ),
-                  _sendButton()
                 ],
               ),
             ),
@@ -160,32 +187,40 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  _sendButton() {
-    return MaterialButton(
-        child: Wrap(
-          alignment: WrapAlignment.start,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: const [
-            Text('Send Post'),
-            SizedBox(
-              width: 8,
-            ),
-            Icon(
-              Icons.send,
-              color: Colors.redAccent,
-              size: 28,
-            ),
-          ],
-        ),
-        onPressed: () async {
+  _sendButton(Post? post, bool isQuotePost) {
+    return ElevatedButton(
+      style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  side: const BorderSide(color: Colors.blue)))),
+      onPressed: () async {
+        if (post != null && isQuotePost) {
+          _onClickQuotePost(post).then((_) => Navigator.pop(context));
+        } else {
           _onClickSendPost().then((_) => Navigator.pop(context));
-        });
+        }
+      },
+      child: Text(isQuotePost ? 'SEND QUOTE' : "SEND POST",
+          style: const TextStyle(fontSize: 14)),
+    );
   }
 
   Future<void> _onClickSendPost() async {
     if (postStore.formKey.currentState!.validate()) {
       await postStore.createPost(
           postStore.titleController.text, postStore.textController.text);
+      setState(() {
+        postStore.textController.clear();
+      });
+    }
+  }
+
+  Future<void> _onClickQuotePost(Post post) async {
+    if (postStore.formKey.currentState!.validate()) {
+      await postStore.createQuotePost(post, postStore.textController.text);
       setState(() {
         postStore.textController.clear();
       });
