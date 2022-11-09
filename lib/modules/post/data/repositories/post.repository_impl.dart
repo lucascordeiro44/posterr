@@ -41,11 +41,6 @@ class PostRepositoryImpl implements IPostsRepository {
   Future<Either<Failure, bool>> createPost(String title, String text) async {
     try {
       User user = userStore.getLoggedUser;
-      // final posts = await getPosts();
-      // final postLength = posts.fold(
-      //     (l) => throw Exception('Fail when get posts to see the length'),
-      //     (r) => r.length);
-      //I could make some adapter here but in this case don´t need because the Hive already have a adapter generator.
       final post = Post(
         postDate: formatPostDate(DateTime.now()),
         text: text,
@@ -58,22 +53,6 @@ class PostRepositoryImpl implements IPostsRepository {
       return left(PostFailure(message: e.toString()));
     }
   }
-
-  // @override
-  // Future<Either<Failure, Post>> getPost(int postId) async {
-  //   try {
-  //     final post = await datasource.getPost(postId);
-  //     if (post == null) {
-  //       throw NullPostException();
-  //     }
-  //     return right(post);
-  //   } on NullPostException {
-  //     return left(
-  //         NullPostFailure(message: 'Not find any post with this postId'));
-  //   } catch (e) {
-  //     return left(PostFailure(message: e.toString()));
-  //   }
-  // }
 
   @override
   Future<Either<Failure, bool>> createRepost(Post post) async {

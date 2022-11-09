@@ -8,7 +8,6 @@ import 'package:posterr/core/models/content_item.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/post/presenter/states/post.state.dart';
-import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'store/post.store.dart';
 
 class HomePage extends StatefulWidget {

@@ -24,7 +24,7 @@ class AppCardRepost extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.repeat),
               title: Text(
-                whoReposted(),
+                _whoReposted(),
                 style: const TextStyle(color: Colors.grey, fontSize: 16),
               ),
             ),
@@ -33,6 +33,15 @@ class AppCardRepost extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Posted ${repost.relatedPost.single.postDate}",
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    ],
+                  ),
                   ListTile(
                     leading: AppCircleAvatar(
                       maxRadius: 24,
@@ -71,7 +80,7 @@ class AppCardRepost extends StatelessWidget {
     );
   }
 
-  String whoReposted() {
+  _whoReposted() {
     final User repostUser = repost.assignedToUser.single;
     return repostUser.username == loggedUser.username
         ? 'You reposted'
