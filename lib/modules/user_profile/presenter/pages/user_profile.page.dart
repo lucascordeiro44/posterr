@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:posterr/core/utils/utils.dart';
 import 'package:posterr/core/styles.dart';
 import 'package:posterr/core/widgets/circle_avatar.dart';
 import 'package:posterr/core/widgets/divider.dart';
@@ -96,7 +95,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           Row(
             children: const [Text('Historic', style: titleStyle)],
           ),
-          AppDivider(
+          const AppDivider(
             color: Colors.black54,
           ),
         ],

@@ -56,8 +56,8 @@ class AppCard extends StatelessWidget {
                     fontWeight: FontWeight.w500),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+            const Padding(
+              padding:  EdgeInsets.symmetric(vertical: 8.0),
               child: AppDivider(color: Colors.black12),
             ),
             Padding(

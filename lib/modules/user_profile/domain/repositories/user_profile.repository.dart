@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:posterr/core/error/errors.dart';
 import 'package:posterr/core/models/content_item.dart';
-import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 
 abstract class IUserProfileRepository {

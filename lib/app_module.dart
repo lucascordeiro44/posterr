@@ -1,6 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:posterr/core/pages/splash_screen.page.dart';
+import 'package:posterr/modules/post/domain/entities/quote_post.dart';
+import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/user_profile/presenter/pages/user_profile.page.dart';
 import 'package:posterr/modules/user_profile/presenter/store/choose_users.store.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
@@ -25,6 +27,10 @@ class MainModule extends Module {
         Bind.lazySingleton<Box<User>>((i) => Hive.box('users')),
         //Box Posts
         Bind.lazySingleton<Box<Post>>((i) => Hive.box('posts')),
+        //Box Repost
+        Bind.lazySingleton<Box<Repost>>((i) => Hive.box('reposts')),
+        //Box Quote Post
+        Bind.lazySingleton<Box<QuotePost>>((i) => Hive.box('quotePosts')),
 
         //store
         Bind.lazySingleton((i) => AuthStore(i())),
@@ -32,7 +38,7 @@ class MainModule extends Module {
 
         //datasources
         Bind.lazySingleton<IUserDatasource>(
-            (i) => UserDatasource(usersBox: i(), postsBox: i())),
+            (i) => UserDatasource(usersBox: i(), postsBox: i(),repostsBox: i(), quotePostsBox: i())),
 
         //Repositorys
         Bind.lazySingleton<IUserProfileRepository>(

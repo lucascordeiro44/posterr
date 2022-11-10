@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppDivider extends StatelessWidget {
-  Color color;
-  AppDivider({super.key, required this.color});
+  final Color color;
+  const AppDivider({super.key, required this.color});
 
   @override
   Widget build(BuildContext context) {
