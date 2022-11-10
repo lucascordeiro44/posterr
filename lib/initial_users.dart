@@ -20,7 +20,7 @@ final List<User> users = [
   User(
       fullName: 'Jose Cordeiro',
       username: 'josecordeiro',
-      photo: 'https://picsum.photos/132/132',
+      photo: 'https://picsum.photos/160/165',
       joinedDate: DateTime.now()),
   User(
       fullName: 'Juliano Cordeiro',

@@ -10,7 +10,7 @@ import 'package:posterr/modules/user_profile/data/repositories/user_profile.repo
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 import 'package:posterr/modules/user_profile/domain/repositories/user_profile.repository.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
-import 'package:posterr/modules/user_profile/domain/usecases/get_posts_from_loggedUser.usecase.dart';
+import 'package:posterr/modules/user_profile/domain/usecases/get_user_contents.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_users.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
 import 'package:posterr/core/stores/auth_store.dart';
@@ -42,8 +42,8 @@ class MainModule extends Module {
         Bind.lazySingleton<IGetCurrentUserUsecase>(
             (i) => GetCurrentUserUsecase(i())),
         Bind.lazySingleton<IGetUsersUsecase>((i) => GetUsersUsecase(i())),
-        Bind.lazySingleton<IGetPostsFromLoggedUserUsecase>(
-            (i) => GetPostsFromLoggedUserUsecase(i())),
+        Bind.lazySingleton<IGetUserContentsUsecase>(
+            (i) => GetUserContentsUsecase(i())),
         Bind.lazySingleton<ISetUsersUsecase>((i) => SetUsersUsecase(i())),
       ];
   // Main Routes: All the App Mobules routes

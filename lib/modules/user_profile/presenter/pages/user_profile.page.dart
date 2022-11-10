@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:posterr/core/utils/formats.dart';
+import 'package:posterr/core/utils/utils.dart';
 import 'package:posterr/core/styles.dart';
 import 'package:posterr/core/widgets/circle_avatar.dart';
 import 'package:posterr/core/widgets/divider.dart';
@@ -67,8 +67,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppCircleAvatar(
-                  maxRadius: 65, minRadius: 60, photo: state.user.photo),
+              AppCircleAvatar( photo: state.user.photo),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

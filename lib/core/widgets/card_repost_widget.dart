@@ -33,19 +33,8 @@ class AppCardRepost extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Posted ${repost.relatedPost.single.postDate}",
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 12),
-                      ),
-                    ],
-                  ),
                   ListTile(
                     leading: AppCircleAvatar(
-                      maxRadius: 24,
-                      minRadius: 20,
                       photo:
                           repost.relatedPost.single.assignedToUser.single.photo,
                     ),
@@ -56,6 +45,15 @@ class AppCardRepost extends StatelessWidget {
                           color: Colors.black,
                           fontWeight: FontWeight.w500),
                     ),
+                    subtitle: Row(
+                    children: [
+                      Text(
+                        "Posted in ${repost.relatedPost.single.postDate}",
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    ],
+                  ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),

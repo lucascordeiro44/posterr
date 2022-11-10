@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:hive/hive.dart';
-import 'package:posterr/core/utils/formats.dart';
+import 'package:posterr/core/utils/utils.dart';
 
 part 'user.g.dart';
 

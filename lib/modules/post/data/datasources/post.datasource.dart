@@ -6,10 +6,10 @@ import 'package:posterr/modules/post/domain/entities/repost.dart';
 
 abstract class IPostDatasource {
   Future<List<Post>> getPosts();
-  Future<Post?> getPost(int postId);
+  Future<List<Repost>> getReposts();
+  Future<List<QuotePost>> getQuotePosts();
   Future<bool> createPost(Post post);
   Future<bool> createRepost(Repost post);
-  Future<List<Repost>> getReposts();
   Future<bool> createQuotePost(QuotePost quotePost);
 }
 
@@ -18,16 +18,6 @@ class PostDatasource implements IPostDatasource {
   Box<Repost> repostBox;
   Box<QuotePost> quotePostsBox;
   PostDatasource(this.postsBox, this.repostBox, this.quotePostsBox);
-
-  @override
-  Future<Post?> getPost(int postId) async {
-    try {
-      await Future.delayed(const Duration(microseconds: 200));
-      return postsBox.getAt(postId);
-    } catch (e) {
-      throw PostException(message: e.toString());
-    }
-  }
 
   @override
   Future<List<Post>> getPosts() async {
@@ -80,6 +70,17 @@ class PostDatasource implements IPostDatasource {
       return result;
     } catch (e) {
       throw PostException(message: e.toString());
+    }
+  }
+  
+  @override
+  Future<List<QuotePost>> getQuotePosts() async {
+      try {
+      await Future.delayed(const Duration(microseconds: 300));
+      final List<QuotePost> result = quotePostsBox.values.toList();
+      return result;
+    } catch (e) {
+      throw QuotePostException(message: e.toString());
     }
   }
 }

@@ -46,8 +46,6 @@ class AppCard extends StatelessWidget {
             ),
             ListTile(
               leading: AppCircleAvatar(
-                maxRadius: 35,
-                minRadius: 30,
                 photo: post.assignedToUser.single.photo,
               ),
               title: Text(
@@ -81,9 +79,9 @@ class AppCard extends StatelessWidget {
                       onClickQuotePost();
                     },
                     icon: const Icon(
-                      Icons.reply,
+                      Icons.edit_outlined,
                       color: Colors.blueAccent,
-                      size: 20,
+                      size: 25,
                     ),
                     label: const Text(
                       'Quote Post',
@@ -94,9 +92,9 @@ class AppCard extends StatelessWidget {
                       onClickRepost();
                     },
                     icon: const Icon(
-                      Icons.forward,
+                      Icons.reply,
                       color: Colors.blueAccent,
-                      size: 20,
+                      size: 25,
                     ),
                     label: const Text(
                       'Repost',

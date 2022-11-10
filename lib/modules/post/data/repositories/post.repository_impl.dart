@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 import 'package:posterr/core/error/errors.dart';
-import 'package:posterr/core/utils/formats.dart';
+import 'package:posterr/core/utils/utils.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/core/models/content_item.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
@@ -18,7 +18,7 @@ class PostRepositoryImpl implements IPostsRepository {
 
   PostRepositoryImpl(this.datasource, this.userStore, this.postBox);
 
-  User get _loggedUser =>  userStore.getLoggedUser;
+  User get _loggedUser => userStore.getLoggedUser;
 
   @override
   Future<Either<Failure, bool>> createPost(String title, String text) async {
@@ -57,6 +57,7 @@ class PostRepositoryImpl implements IPostsRepository {
     try {
       final posts = await datasource.getPosts();
       final reposts = await datasource.getReposts();
+      final quotePosts = await datasource.getQuotePosts();
       List<ContentItem> result = [];
       if (posts.isNotEmpty) {
         final postContent = posts
@@ -72,15 +73,24 @@ class PostRepositoryImpl implements IPostsRepository {
             .toList();
         result.addAll(repostContent);
       }
+
+      if (quotePosts.isNotEmpty) {
+        final quotePostsContent = quotePosts
+            .map<ContentItem<QuotePost>>((e) =>
+                ContentItem<QuotePost>(content: e, type: ContentType.quotePost))
+            .toList();
+        result.addAll(quotePostsContent);
+      }
       return right(result);
     } catch (e) {
       return left(HomeContentFailure(message: e.toString()));
     }
   }
-  
+
   @override
-  Future<Either<Failure, bool>> createQuotePost(Post post, String comment) async  {
-   try {
+  Future<Either<Failure, bool>> createQuotePost(
+      Post post, String comment) async {
+    try {
       final quotePost = QuotePost(
           comment: comment,
           quotePostDate: formatPostDate(DateTime.now()),
