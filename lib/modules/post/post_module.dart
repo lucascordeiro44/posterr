@@ -11,7 +11,7 @@ import 'package:posterr/modules/post/domain/usecases/create_post.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/create_quote_post.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/create_repost.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/get_home_content.usecase.dart';
-import 'package:posterr/modules/post/presenter/home.page.dart';
+import 'package:posterr/modules/post/presenter/pages/home.page.dart';
 import 'package:posterr/modules/post/presenter/store/post.store.dart';
 
 class PostModule extends Module {

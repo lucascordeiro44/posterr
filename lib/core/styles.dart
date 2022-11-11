@@ -5,3 +5,6 @@ const titleStyle =
 
 const subtitleStyle = TextStyle(
     fontSize: 14, color: Colors.black38, fontWeight: FontWeight.w600);
+
+    const commentStyle = TextStyle(
+    fontSize: 14, color: Colors.black54, fontWeight: FontWeight.w800);

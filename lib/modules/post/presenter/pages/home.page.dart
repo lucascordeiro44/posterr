@@ -10,7 +10,7 @@ import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/post/presenter/states/post.state.dart';
-import 'store/post.store.dart';
+import '../store/post.store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
