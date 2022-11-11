@@ -39,7 +39,10 @@ class _HomePageState extends State<HomePage> {
           iconSize: 40,
         )
       ]),
-      body: _body(context),
+      body: RefreshIndicator(
+        onRefresh: () async => await postStore.fetchHomeContent(),
+        child: _body(context),
+      ),
       floatingActionButton: FloatingActionButton(
           isExtended: true,
           onPressed: () => _showBottomSheet(context: context),
@@ -62,7 +65,9 @@ class _HomePageState extends State<HomePage> {
           child: Text('There is not post yet!', style: titleStyle),
         );
       }
-      return _listView(state);
+      return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: _listView(state));
     }
 
     if (state is ErrorHomeContentState) {
@@ -74,12 +79,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   _listView(SuccessHomeContentState state) {
+    int listLength = state.contents.length;
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: ListView.builder(
-        itemCount: state.contents.length,
+        itemCount: listLength,
         itemBuilder: (context, index) {
-          ContentItem contentItem = state.contents[index];
+          int reversedIndex = listLength - 1 - index;
+          ContentItem contentItem = state.contents[reversedIndex];
           if (contentItem.type == ContentType.post) {
             Post post = contentItem.content;
             return _postCard(post);

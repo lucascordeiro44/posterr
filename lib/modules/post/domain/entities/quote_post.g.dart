@@ -17,7 +17,7 @@ class QuotePostAdapter extends TypeAdapter<QuotePost> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return QuotePost(
-      quotePostDate: fields[0] as String,
+      quotePostDate: fields[0] as DateTime,
       assignedToUser: (fields[1] as HiveList).castHiveList(),
       comment: fields[2] as String,
       relatedPost: (fields[3] as HiveList).castHiveList(),

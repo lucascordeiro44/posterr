@@ -18,7 +18,7 @@ class PostAdapter extends TypeAdapter<Post> {
     };
     return Post(
       assignedToUser: (fields[2] as HiveList).castHiveList(),
-      postDate: fields[0] as String,
+      postDate: fields[0] as DateTime,
       text: fields[1] as String,
     );
   }

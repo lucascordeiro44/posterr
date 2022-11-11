@@ -6,7 +6,7 @@ part 'post.g.dart';
 @HiveType(typeId: 2)
 class Post extends HiveObject {
   @HiveField(0)
-  final String postDate;
+  final DateTime postDate;
   @HiveField(1)
   final String text;
   @HiveField(2)

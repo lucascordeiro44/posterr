@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posterr/core/utils/utils.dart';
 import 'package:posterr/core/widgets/circle_avatar.dart';
 import 'package:posterr/core/widgets/divider.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
@@ -46,14 +47,16 @@ class AppCardRepost extends StatelessWidget {
                           fontWeight: FontWeight.w500),
                     ),
                     subtitle: Row(
-                    children: [
-                      Text(
-                        "Posted in ${repost.relatedPost.single.postDate}",
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 12),
-                      ),
-                    ],
-                  ),
+                      children: [
+                        Text(
+                          "Posted ${diffTime(repost.relatedPost.single.postDate)} ago",
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -81,7 +84,7 @@ class AppCardRepost extends StatelessWidget {
   _whoReposted() {
     final User repostUser = repost.assignedToUser.single;
     return repostUser.username == loggedUser.username
-        ? 'You reposted'
-        : '${repostUser.fullName} reposted';
+        ? "You reposted in ${diffTime(repost.repostDate)} ago"
+        : '${repostUser.fullName} reposted in ${diffTime(repost.repostDate)} ago';
   }
 }

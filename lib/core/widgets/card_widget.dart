@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posterr/core/utils/utils.dart';
 import 'package:posterr/core/widgets/circle_avatar.dart';
 import 'package:posterr/core/widgets/divider.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
@@ -38,8 +39,9 @@ class AppCard extends StatelessWidget {
                     width: 8,
                   ),
                   Text(
-                    post.postDate,
-                    style: const TextStyle(color: Colors.grey),
+                    "Posted ${diffTime(post.postDate)} ago",
+                    style: const TextStyle(
+                        color: Colors.grey, fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -57,7 +59,7 @@ class AppCard extends StatelessWidget {
               ),
             ),
             const Padding(
-              padding:  EdgeInsets.symmetric(vertical: 8.0),
+              padding: EdgeInsets.symmetric(vertical: 8.0),
               child: AppDivider(color: Colors.black12),
             ),
             Padding(

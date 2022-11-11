@@ -2,7 +2,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:posterr/core/stores/auth_store.dart';
-import 'package:posterr/core/utils/utils.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
@@ -17,7 +16,7 @@ final testUserFormatDate = User(
     joinedDate: DateTime(2022, 10, 18));
 
 final post = Post(
-  postDate: formatPostDate(DateTime.now()),
+  postDate: DateTime.now(),
   text: 'Mock Post text',
   assignedToUser: HiveList(Modular.get<AuthStore>().getUserBox),
 );

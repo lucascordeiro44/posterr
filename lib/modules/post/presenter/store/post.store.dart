@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
+import 'package:flutter/material.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/usecases/create_post.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/create_quote_post.usecase.dart';
@@ -13,6 +14,7 @@ class PostStore extends ValueNotifier<HomeContentState> {
   final ICreateQuotePostUsecase createQuotePostUsecase;
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
+  final GlobalKey refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   final formKey = GlobalKey<FormState>();
   PostStore(this.getHomeContentUsecase, this.createUsecase,
       this.createRepostUsecase, this.createQuotePostUsecase)

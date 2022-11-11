@@ -24,7 +24,7 @@ class PostRepositoryImpl implements IPostsRepository {
   Future<Either<Failure, bool>> createPost(String title, String text) async {
     try {
       final post = Post(
-        postDate: formatPostDate(DateTime.now()),
+        postDate: DateTime.now(),
         text: text,
         assignedToUser: HiveList(userStore.getUserBox),
       );
@@ -40,7 +40,7 @@ class PostRepositoryImpl implements IPostsRepository {
   Future<Either<Failure, bool>> createRepost(Post post) async {
     try {
       final repost = Repost(
-          repostDate: formatPostDate(DateTime.now()),
+          repostDate: DateTime.now(),
           assignedToUser: HiveList(userStore.getUserBox),
           relatedPost: HiveList(postBox));
       repost.assignedToUser.add(_loggedUser);
@@ -63,7 +63,7 @@ class PostRepositoryImpl implements IPostsRepository {
         final postContent = posts
             .map<ContentItem<Post>>(
                 (e) => ContentItem<Post>(content: e, type: ContentType.post))
-            .toList();
+            .toList().reversed.toList();
         result.addAll(postContent);
       }
       if (reposts.isNotEmpty) {
@@ -78,7 +78,7 @@ class PostRepositoryImpl implements IPostsRepository {
         final quotePostsContent = quotePosts
             .map<ContentItem<QuotePost>>((e) =>
                 ContentItem<QuotePost>(content: e, type: ContentType.quotePost))
-            .toList();
+             .toList();
         result.addAll(quotePostsContent);
       }
       return right(result);
@@ -93,7 +93,7 @@ class PostRepositoryImpl implements IPostsRepository {
     try {
       final quotePost = QuotePost(
           comment: comment,
-          quotePostDate: formatPostDate(DateTime.now()),
+          quotePostDate: DateTime.now(),
           assignedToUser: HiveList(userStore.getUserBox),
           relatedPost: HiveList(postBox));
       quotePost.assignedToUser.add(_loggedUser);

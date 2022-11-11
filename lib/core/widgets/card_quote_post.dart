@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posterr/core/styles.dart';
+import 'package:posterr/core/utils/utils.dart';
 import 'package:posterr/core/widgets/circle_avatar.dart';
 import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 
@@ -30,12 +31,27 @@ class AppCardQuotePost extends StatelessWidget {
                 const SizedBox(
                   width: 8,
                 ),
-                Text(
-                  quotePost.assignedToUser.single.fullName,
-                  style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      quotePost.assignedToUser.single.fullName,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      "Quoted ${diffTime(quotePost.quotePostDate)} ago",
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black38,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -76,13 +92,28 @@ class AppCardQuotePost extends StatelessWidget {
                                 const SizedBox(
                                   width: 8,
                                 ),
-                                Text(
-                                  quotePost.relatedPost.single.assignedToUser
-                                      .single.fullName,
-                                  style: const TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      quotePost.relatedPost.single
+                                          .assignedToUser.single.fullName,
+                                      style: const TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "Posted ${diffTime(quotePost.relatedPost.single.postDate)} ago",
+                                      style: const TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.black38,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
                                 )
                               ],
                             ),

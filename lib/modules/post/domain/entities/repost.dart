@@ -7,7 +7,7 @@ part 'repost.g.dart';
 @HiveType(typeId: 3)
 class Repost extends HiveObject {
   @HiveField(0)
-  final String repostDate;
+  final DateTime repostDate;
   @HiveField(1)
   final HiveList<User> assignedToUser;
   @HiveField(2)

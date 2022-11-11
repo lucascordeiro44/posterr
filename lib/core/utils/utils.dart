@@ -11,12 +11,20 @@ String formatPostDate(DateTime postDate) {
       .yMMMMdjm;
 }
 
-int diffTime(DateTime from, DateTime to) {
-  from = DateTime(from.year, from.month, from.day, from.minute);
-  to = DateTime(to.year, to.month, to.day, to.minute);
-  if (to.difference(from).inMinutes > 60) {
-    return (to.difference(from).inDays);
+String diffTime(DateTime from) {
+  DateTime to = DateTime.now();
+  from = DateTime(
+      from.year, from.month, from.day, from.hour, from.minute, from.second);
+  to = DateTime(to.year, to.month, to.day, to.hour, to.minute, from.second);
+  if (to.difference(from).inDays < 1) {
+    if (to.difference(from).inHours < 1) {
+      if ((to.difference(from).inMinutes < 1)) {
+        return "${(to.difference(from).inSeconds)}s";
+      }
+      return "${(to.difference(from).inMinutes)}m";
+    }
+    return "${(to.difference(from).inHours)}h";
   } else {
-    return to.difference(from).inMinutes;
+    return "${(to.difference(from).inDays)}d";
   }
 }

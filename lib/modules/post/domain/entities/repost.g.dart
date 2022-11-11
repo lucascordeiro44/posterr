@@ -17,7 +17,7 @@ class RepostAdapter extends TypeAdapter<Repost> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Repost(
-      repostDate: fields[0] as String,
+      repostDate: fields[0] as DateTime,
       assignedToUser: (fields[1] as HiveList).castHiveList(),
       relatedPost: (fields[2] as HiveList).castHiveList(),
     );

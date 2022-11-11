@@ -7,7 +7,7 @@ part 'quote_post.g.dart';
 @HiveType(typeId: 4)
 class QuotePost extends HiveObject {
   @HiveField(0)
-  String quotePostDate;
+  DateTime quotePostDate;
   @HiveField(1)
   HiveList<User> assignedToUser;
   @HiveField(2)
