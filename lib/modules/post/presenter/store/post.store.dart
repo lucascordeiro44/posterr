@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:posterr/core/globals.dart';
 import 'package:posterr/core/stores/auth_store.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/usecases/create_post.usecase.dart';
