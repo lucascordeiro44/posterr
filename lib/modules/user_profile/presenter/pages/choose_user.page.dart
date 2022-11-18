@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/styles.dart';
 import 'package:posterr/modules/user_profile/presenter/states/choose_user.state.dart';
 import 'package:posterr/modules/user_profile/presenter/store/choose_users.store.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
@@ -25,12 +26,24 @@ class _ChooseUserPageState extends State<ChooseUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Choose User')),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Center(child: _body(context)),
-      ),
-    );
+        appBar: AppBar(title: const Text('Choose User')),
+        body: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                "Choose the user you will log in:",
+                style: titleStyle,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              _body(context),
+            ],
+          ),
+        ));
   }
 
   _body(BuildContext context) {
@@ -44,11 +57,7 @@ class _ChooseUserPageState extends State<ChooseUserPage> {
       if (state.users.isEmpty) {
         return const Text('Nothing Users ');
       }
-      return ListView.separated(
-        separatorBuilder: (context, index) => Container(
-          color: Colors.black12,
-          height: 2,
-        ),
+      return ListView.builder(
         shrinkWrap: true,
         itemCount: state.users.length,
         itemBuilder: (context, index) {
@@ -56,6 +65,9 @@ class _ChooseUserPageState extends State<ChooseUserPage> {
           return Column(
             children: [
               MaterialButton(
+                color: Colors.blue[200],
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
                 onPressed: () async {
                   await authStore.login(user.username);
                   Modular.to.pushNamed('/post/home');

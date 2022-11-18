@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: ListView.builder(
+        controller: postStore.listController,
         itemCount: listLength,
         itemBuilder: (context, index) {
           int reversedIndex = listLength - 1 - index;
@@ -107,7 +108,10 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
       child: AppCard(
         post: post,
-        onClickRepost: () async => await postStore.createRepost(post),
+        onClickRepost: () async {
+          await postStore.createRepost(post);
+          postStore.scrollToTop();
+        },
         onClickQuotePost: () async =>
             _showBottomSheet(context: context, isQuotePost: true, post: post),
       ),
@@ -205,9 +209,11 @@ class _HomePageState extends State<HomePage> {
                   side: const BorderSide(color: Colors.blue)))),
       onPressed: () async {
         if (post != null && isQuotePost) {
-          _onClickQuotePost(post).then((_) => Navigator.pop(context));
+          Navigator.pop(context);
+          _onClickQuotePost(post);
         } else {
-          _onClickSendPost().then((_) => Navigator.pop(context));
+          Navigator.pop(context);
+          _onClickSendPost();
         }
       },
       child: Text(isQuotePost ? 'SEND QUOTE' : "SEND POST",
@@ -232,5 +238,11 @@ class _HomePageState extends State<HomePage> {
         postStore.textController.clear();
       });
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    authStore.logout();
   }
 }

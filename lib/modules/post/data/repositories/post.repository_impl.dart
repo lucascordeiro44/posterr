@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 import 'package:posterr/core/error/errors.dart';
-import 'package:posterr/core/utils/utils.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/core/models/content_item.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
@@ -63,7 +62,7 @@ class PostRepositoryImpl implements IPostsRepository {
         final postContent = posts
             .map<ContentItem<Post>>(
                 (e) => ContentItem<Post>(content: e, type: ContentType.post))
-            .toList().reversed.toList();
+            .toList();
         result.addAll(postContent);
       }
       if (reposts.isNotEmpty) {
@@ -73,12 +72,11 @@ class PostRepositoryImpl implements IPostsRepository {
             .toList();
         result.addAll(repostContent);
       }
-
       if (quotePosts.isNotEmpty) {
         final quotePostsContent = quotePosts
             .map<ContentItem<QuotePost>>((e) =>
                 ContentItem<QuotePost>(content: e, type: ContentType.quotePost))
-             .toList();
+            .toList();
         result.addAll(quotePostsContent);
       }
       return right(result);

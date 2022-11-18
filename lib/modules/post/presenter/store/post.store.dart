@@ -1,5 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'package:posterr/core/globals.dart';
+import 'package:posterr/core/stores/auth_store.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/usecases/create_post.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/create_quote_post.usecase.dart';
@@ -15,9 +16,11 @@ class PostStore extends ValueNotifier<HomeContentState> {
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
   final GlobalKey refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  final ScrollController listController = ScrollController();
   final formKey = GlobalKey<FormState>();
+  final AuthStore authStore;
   PostStore(this.getHomeContentUsecase, this.createUsecase,
-      this.createRepostUsecase, this.createQuotePostUsecase)
+      this.createRepostUsecase, this.createQuotePostUsecase, this.authStore)
       : super(InitialHomeContentState([]));
 
   void emit(HomeContentState newState) => value = newState;
@@ -34,17 +37,34 @@ class PostStore extends ValueNotifier<HomeContentState> {
   }
 
   Future<void> createPost(String title, String text) async {
-    await createUsecase.call(title, text);
-    await fetchHomeContent();
+    if (authStore.getLoggedUser.canPublish() && Globals.publicationCounter < 5) {
+      await createUsecase.call(title, text);
+      Globals.incrementPublicationValue();
+      await fetchHomeContent();
+    }
   }
 
   Future<void> createRepost(Post post) async {
-    await createRepostUsecase.call(post);
-    await fetchHomeContent();
+    if (authStore.getLoggedUser.canPublish() && Globals.publicationCounter < 5) {
+      await createRepostUsecase.call(post);
+      Globals.incrementPublicationValue();
+      await fetchHomeContent();
+    }
   }
 
   Future<void> createQuotePost(Post post, String comment) async {
-    await createQuotePostUsecase.call(post, comment);
-    await fetchHomeContent();
+    if (authStore.getLoggedUser.canPublish() && Globals.publicationCounter < 5) {
+      await createQuotePostUsecase.call(post, comment);
+      Globals.incrementPublicationValue();
+      await fetchHomeContent();
+    }
+  }
+
+  void scrollToTop() {
+    listController.animateTo(
+      listController.position.maxScrollExtent,
+      duration: const Duration(seconds: 2),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 }

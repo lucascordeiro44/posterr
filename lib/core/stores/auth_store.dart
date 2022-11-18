@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:posterr/core/globals.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
 import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
 
@@ -16,6 +17,7 @@ class AuthStore extends ValueNotifier<UserProfileState> {
 
   Box<User> get getUserBox => Modular.get<Box<User>>();
   User get getLoggedUser => user!;
+  static int userPublicationCounter = 0;
 
   Future<void> login(String userName) async {
     emit(LoadingUserProfileState());
@@ -27,5 +29,13 @@ class AuthStore extends ValueNotifier<UserProfileState> {
       return SuccessUserProfileState(r);
     });
     emit(newState);
+  }
+
+  Future<void> logout() async {
+    User loggedUser = getLoggedUser;
+    loggedUser.userPublishCounter = Globals.publicationCounter;
+    loggedUser.lastPutlicationEventDate = DateTime.now();
+    getUserBox.put(loggedUser.key, loggedUser);
+    Globals.publicationCounter = 0;
   }
 }

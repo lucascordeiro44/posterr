@@ -27,7 +27,7 @@ class PostModule extends Module {
         Bind.lazySingleton<Box<Repost>>((i) => Hive.box('reposts')),
         Bind.lazySingleton<Box<QuotePost>>((i) => Hive.box('quotePosts')),
         //Stores
-        Bind.lazySingleton((i) => PostStore(i(), i(), i(), i())),
+        Bind.lazySingleton((i) => PostStore(i(), i(), i(), i(), i())),
         //repositorys
         Bind.lazySingleton<IPostsRepository>(
             (i) => PostRepositoryImpl(i(), i(), i())),

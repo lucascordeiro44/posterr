@@ -15,13 +15,25 @@ class User extends HiveObject {
   final String fullName;
   @HiveField(3)
   final String photo;
+  @HiveField(4)
+  int userPublishCounter;
+  @HiveField(5)
+  DateTime lastPutlicationEventDate;
 
   String get dateJoined => formatDateJoinedDate(joinedDate);
 
-  User({
-    required this.username,
-    required this.fullName,
-    required this.joinedDate,
-    required this.photo,
-  });
+  bool canPublish() {
+    if (userPublishCounter == 5 && isToday(lastPutlicationEventDate)) {
+      return false;
+    }
+    return true;
+  }
+
+  User(
+      {required this.username,
+      required this.fullName,
+      required this.joinedDate,
+      required this.photo,
+      required this.userPublishCounter,
+      required this.lastPutlicationEventDate});
 }

@@ -13,7 +13,8 @@ class GetHomeContentUsecase extends IGetHomeContentUsecase {
   GetHomeContentUsecase(this.repository);
 
   @override
-  Future<Either<Failure, List<ContentItem>>> call() {
+  Future<Either<Failure, List<ContentItem>>> call() async {
+    await Future.delayed(const Duration(seconds: 1));
     return repository.getAllHomeContent();
   }
 }

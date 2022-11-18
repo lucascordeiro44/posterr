@@ -24,3 +24,4 @@ _initStorage() async {
   await Hive.openBox<Repost>('reposts');
   await Hive.openBox<QuotePost>('quotePosts');
 }
+

@@ -66,7 +66,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppCircleAvatar( photo: state.user.photo),
+              AppCircleAvatar(photo: state.user.photo),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -93,7 +93,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       child: Column(
         children: [
           Row(
-            children: const [Text('Historic', style: titleStyle)],
+            children: const [Text('Feed', style: titleStyle)],
           ),
           const AppDivider(
             color: Colors.black54,

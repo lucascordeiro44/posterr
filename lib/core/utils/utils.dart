@@ -15,7 +15,7 @@ String diffTime(DateTime from) {
   DateTime to = DateTime.now();
   from = DateTime(
       from.year, from.month, from.day, from.hour, from.minute, from.second);
-  to = DateTime(to.year, to.month, to.day, to.hour, to.minute, from.second);
+  to = DateTime(to.year, to.month, to.day, to.hour, to.minute, to.second);
   if (to.difference(from).inDays < 1) {
     if (to.difference(from).inHours < 1) {
       if ((to.difference(from).inMinutes < 1)) {
@@ -27,4 +27,12 @@ String diffTime(DateTime from) {
   } else {
     return "${(to.difference(from).inDays)}d";
   }
+}
+
+bool isToday(DateTime from) {
+  DateTime now = DateTime.now();
+  return DateTime(from.year, from.month, from.day)
+          .difference(DateTime(now.year, now.month, now.day))
+          .inDays ==
+      0;
 }

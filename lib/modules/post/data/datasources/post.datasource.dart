@@ -72,10 +72,10 @@ class PostDatasource implements IPostDatasource {
       throw PostException(message: e.toString());
     }
   }
-  
+
   @override
   Future<List<QuotePost>> getQuotePosts() async {
-      try {
+    try {
       await Future.delayed(const Duration(microseconds: 300));
       final List<QuotePost> result = quotePostsBox.values.toList();
       return result;
