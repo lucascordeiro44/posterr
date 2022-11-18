@@ -86,8 +86,8 @@ class _HomePageState extends State<HomePage> {
         controller: postStore.listController,
         itemCount: listLength,
         itemBuilder: (context, index) {
-          int reversedIndex = listLength - 1 - index;
-          ContentItem contentItem = state.contents[reversedIndex];
+          // int reversedIndex = listLength - 1 - index;
+          ContentItem contentItem = state.contents[index];
           if (contentItem.type == ContentType.post) {
             Post post = contentItem.content;
             return _postCard(post);
@@ -239,5 +239,4 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
-
 }

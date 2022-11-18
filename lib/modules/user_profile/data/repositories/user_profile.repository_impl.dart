@@ -53,14 +53,14 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
       if (posts.isNotEmpty) {
         final postContent = posts
             .map<ContentItem<Post>>(
-                (e) => ContentItem<Post>(content: e, type: ContentType.post))
+                (e) => ContentItem<Post>(content: e, type: ContentType.post, publishDate: e.postDate))
             .toList();
         result.addAll(postContent);
       }
       if (reposts.isNotEmpty) {
         final repostContent = reposts
             .map<ContentItem<Repost>>((e) =>
-                ContentItem<Repost>(content: e, type: ContentType.repost))
+                ContentItem<Repost>(content: e, type: ContentType.repost, publishDate: e.repostDate))
             .toList();
         result.addAll(repostContent);
       }
@@ -68,10 +68,15 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
       if (quotePosts.isNotEmpty) {
         final quotePostsContent = quotePosts
             .map<ContentItem<QuotePost>>((e) =>
-                ContentItem<QuotePost>(content: e, type: ContentType.quotePost))
+                ContentItem<QuotePost>(content: e, type: ContentType.quotePost, publishDate: e.quotePostDate))
             .toList();
         result.addAll(quotePostsContent);
       }
+        result.sort(
+        (a, b) {
+         return a.publishDate.compareTo(b.publishDate);
+        },
+      );
       return right(result);
     } on UserException catch (e, s) {
       return left(GetPostsException(message: e.message, stackTrace: s));
