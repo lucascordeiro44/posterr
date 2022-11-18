@@ -29,6 +29,7 @@ class PostRepositoryImpl implements IPostsRepository {
       );
       post.assignedToUser.add(_loggedUser);
       final result = await datasource.createPost(post);
+      incrementPublicationCounter();
       return right(result);
     } catch (e) {
       return left(PostFailure(message: e.toString()));
@@ -45,6 +46,7 @@ class PostRepositoryImpl implements IPostsRepository {
       repost.assignedToUser.add(_loggedUser);
       repost.relatedPost.add(post);
       final result = await datasource.createRepost(repost);
+      incrementPublicationCounter();
       return right(result);
     } on RepostException catch (e) {
       return left(RepostFailure(message: e.message));
@@ -97,9 +99,17 @@ class PostRepositoryImpl implements IPostsRepository {
       quotePost.assignedToUser.add(_loggedUser);
       quotePost.relatedPost.add(post);
       final result = await datasource.createQuotePost(quotePost);
+      incrementPublicationCounter();
       return right(result);
     } on QuotePostException catch (e) {
       return left(QuotePostFailure(message: e.message));
     }
+  }
+
+  @override
+  Future<void> incrementPublicationCounter() async {
+    _loggedUser.userPublishCounter++;
+    _loggedUser.lastPutlicationEventDate = DateTime.now();
+    userStore.getUserBox.put(_loggedUser.key, _loggedUser);
   }
 }

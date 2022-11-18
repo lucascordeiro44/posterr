@@ -8,4 +8,5 @@ abstract class IPostsRepository {
   Future<Either<Failure, bool>> createRepost(Post post);
   Future<Either<Failure, bool>> createQuotePost(Post post, String comment);
   Future<Either<Failure, List<ContentItem>>> getAllHomeContent();
+  Future<void> incrementPublicationCounter();
 }
