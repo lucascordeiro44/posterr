@@ -3,8 +3,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:posterr/core/styles.dart';
 import 'package:posterr/core/widgets/circle_avatar.dart';
 import 'package:posterr/core/widgets/divider.dart';
+import 'package:posterr/initial_users.dart';
 import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
 import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -15,9 +17,11 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   final AuthStore authStore = Modular.get();
+  final UserProfileStore userProfileStore = Modular.get();
   @override
   void initState() {
     super.initState();
+    userProfileStore.fetchUserContents();
   }
 
   @override
@@ -29,7 +33,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   _body(BuildContext context) {
-    final store = context.watch<AuthStore>();
+    final store = context.watch<UserProfileStore>();
     final state = store.value;
 
     if (state is LoadingUserProfileState) {
@@ -40,13 +44,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _header(context, state),
-          _userContent(),
+          _header(context),
+          _userContent(context, state),
         ],
       );
     }
 
-    if (state is ErrorUseProfileState) {
+    if (state is ErrorUserProfileState) {
       return Container(
         color: Colors.white,
         child: Text(state.message),
@@ -54,7 +58,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-  Stack _header(BuildContext context, SuccessUserProfileState state) {
+  Stack _header(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -66,16 +70,17 @@ class _UserProfilePageState extends State<UserProfilePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppCircleAvatar(photo: state.user.photo),
+              AppCircleAvatar(photo: authStore.getLoggedUser.photo),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 14, bottom: 8),
-                      child: Text(state.user.fullName, style: titleStyle),
+                      child: Text(authStore.getLoggedUser.fullName,
+                          style: titleStyle),
                     ),
-                    Text("Joined Date: ${state.user.dateJoined}",
+                    Text("Joined Date: ${authStore.getLoggedUser.dateJoined}",
                         style: subtitleStyle),
                   ]),
                 ],
@@ -87,13 +92,20 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  _userContent() {
+  _userContent(BuildContext context, SuccessUserProfileState state) {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           Row(
-            children: const [Text('Feed', style: titleStyle)],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Feed', style: titleStyle),
+              Text(
+                  'Posts: ${userProfileStore.amountPosts}  Reposts: ${userProfileStore.amountReposts}  Quotes: ${userProfileStore.amountQuotedPosts}',
+                  style: labelStyle)
+            ],
           ),
           const AppDivider(
             color: Colors.black54,

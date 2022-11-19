@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:posterr/core/stores/auth_store.state.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
-import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
 
 import '../../modules/user_profile/domain/entities/user.dart';
 
-class AuthStore extends ValueNotifier<UserProfileState> {
+class AuthStore extends ValueNotifier<AuthStoreState> {
   final IGetCurrentUserUsecase usecase;
-  AuthStore(this.usecase) : super(InitialUserProfileState());
+  AuthStore(this.usecase) : super(InitiaAuthStoreState());
 
-  void emit(UserProfileState newState) => value = newState;
+  void emit(AuthStoreState newState) => value = newState;
 
   User? user;
 
@@ -19,13 +19,13 @@ class AuthStore extends ValueNotifier<UserProfileState> {
   static int userPublicationCounter = 0;
 
   Future<void> login(String userName) async {
-    emit(LoadingUserProfileState());
+    emit(LoadingAuthStoreState());
     final result = await usecase.call(userName);
     final newState = result.fold((l) {
-      return ErrorUseProfileState(l.message);
+      return ErrorAuthStoreState(l.message);
     }, (r) {
       user = r;
-      return SuccessUserProfileState(r);
+      return SuccessAuthStoreState(r);
     });
     emit(newState);
   }

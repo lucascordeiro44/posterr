@@ -17,6 +17,7 @@ import 'package:posterr/modules/user_profile/domain/usecases/get_users.usecase.d
 import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
 import 'package:posterr/core/stores/auth_store.dart';
 import 'package:posterr/modules/user_profile/presenter/pages/choose_user.page.dart';
+import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 
 /// It's the main App module. Each module should have your binds (dependencys) and routes
 class MainModule extends Module {
@@ -35,6 +36,7 @@ class MainModule extends Module {
         //store
         Bind.lazySingleton((i) => AuthStore(i())),
         Bind.lazySingleton((i) => ChooseUserStore(i())),
+         Bind.lazySingleton((i) => UserProfileStore(i(), i())),
 
         //datasources
         Bind.lazySingleton<IUserDatasource>(

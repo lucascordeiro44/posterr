@@ -58,7 +58,7 @@ class PostStore extends ValueNotifier<HomeContentState> {
 
   void scrollToTop() {
     listController.animateTo(
-      listController.position.maxScrollExtent,
+      listController.position.minScrollExtent,
       duration: const Duration(seconds: 2),
       curve: Curves.fastOutSlowIn,
     );
