@@ -10,7 +10,6 @@ class UserProfileStore extends ValueNotifier<UserProfileState> {
   int amountPosts = 0;
   int amountReposts = 0;
   int amountQuotedPosts = 0;
-
   UserProfileStore(this.usecase, this.authStore)
       : super(InitialUserProfileState([]));
 
@@ -29,6 +28,9 @@ class UserProfileStore extends ValueNotifier<UserProfileState> {
   }
 
   void calculateAmountPublications(List<ContentItem> contents) {
+    amountPosts = 0;
+    amountReposts = 0;
+    amountQuotedPosts = 0;
     for (ContentItem c in contents) {
       if (c.type == ContentType.post) {
         amountPosts++;
