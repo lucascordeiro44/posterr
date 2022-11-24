@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:posterr/core/pages/splash_screen.page.dart';
 import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
+import 'package:posterr/modules/user_profile/presenter/pages/new_user_profile.page.dart';
 import 'package:posterr/modules/user_profile/presenter/pages/user_profile.page.dart';
 import 'package:posterr/modules/user_profile/presenter/store/choose_users.store.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
@@ -36,11 +37,11 @@ class MainModule extends Module {
         //store
         Bind.lazySingleton((i) => AuthStore(i())),
         Bind.lazySingleton((i) => ChooseUserStore(i())),
-         Bind.lazySingleton((i) => UserProfileStore(i(), i())),
+        Bind.lazySingleton((i) => UserProfileStore(i(), i())),
 
         //datasources
-        Bind.lazySingleton<IUserDatasource>(
-            (i) => UserDatasource(usersBox: i(), postsBox: i(),repostsBox: i(), quotePostsBox: i())),
+        Bind.lazySingleton<IUserDatasource>((i) => UserDatasource(
+            usersBox: i(), postsBox: i(), repostsBox: i(), quotePostsBox: i())),
 
         //Repositorys
         Bind.lazySingleton<IUserProfileRepository>(

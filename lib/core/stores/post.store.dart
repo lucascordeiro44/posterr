@@ -35,24 +35,33 @@ class PostStore extends ValueNotifier<HomeContentState> {
     emit(newState);
   }
 
-  Future<void> createPost(String title, String text) async {
+  Future<bool> createPost(String title, String text) async {
     if (authStore.getLoggedUser.canPublish()) {
       await createUsecase.call(title, text);
       await fetchHomeContent();
+      return true;
+    } else {
+      return false;
     }
   }
 
-  Future<void> createRepost(Post post) async {
+  Future<bool> createRepost(Post post) async {
     if (authStore.getLoggedUser.canPublish()) {
       await createRepostUsecase.call(post);
       await fetchHomeContent();
+      return true;
+    } else {
+      return false;
     }
   }
 
-  Future<void> createQuotePost(Post post, String comment) async {
+  Future<bool> createQuotePost(Post post, String comment) async {
     if (authStore.getLoggedUser.canPublish()) {
       await createQuotePostUsecase.call(post, comment);
       await fetchHomeContent();
+      return true;
+    } else {
+      return false;
     }
   }
 

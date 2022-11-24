@@ -12,6 +12,8 @@ import 'package:posterr/modules/user_profile/domain/repositories/user_profile.re
 final testUserFormatDate = User(
     fullName: 'Lucas Cordeiro',
     username: 'lucascordeiro',
+    lastPutlicationEventDate: DateTime(2022, 11, 13),
+    userPublishCounter: 0,
     photo: 'https://picsum.photos/150/150',
     joinedDate: DateTime(2022, 10, 18));
 
@@ -26,6 +28,8 @@ final post = Post(
 final user = User(
     fullName: 'Lucas Cordeiro',
     username: 'lucascordeiro',
+    lastPutlicationEventDate: DateTime(2022, 11, 13),
+    userPublishCounter: 0,
     photo: 'https://picsum.photos/150/150',
     joinedDate: DateTime.now());
 
@@ -34,21 +38,29 @@ final List<User> users = [
       fullName: 'Lucas Cordeiro',
       username: 'lucascordeiro',
       photo: 'https://picsum.photos/135/135',
+      lastPutlicationEventDate: DateTime(2022, 11, 13),
+      userPublishCounter: 0,
       joinedDate: DateTime.now()),
   User(
       fullName: 'Maria Cordeiro',
       username: 'mariacordeiro',
       photo: 'https://picsum.photos/160/160',
+      lastPutlicationEventDate: DateTime(2022, 11, 13),
+      userPublishCounter: 0,
       joinedDate: DateTime.now()),
   User(
       fullName: 'Jose Cordeiro',
       username: 'josecordeiro',
       photo: 'https://picsum.photos/132/132',
+      lastPutlicationEventDate: DateTime(2022, 11, 13),
+      userPublishCounter: 0,
       joinedDate: DateTime.now()),
   User(
       fullName: 'Juliano Cordeiro',
       username: 'julianocordeiro',
       photo: 'https://picsum.photos/140/140',
+      lastPutlicationEventDate: DateTime(2022, 11, 13),
+      userPublishCounter: 0,
       joinedDate: DateTime.now()),
 ];
 
