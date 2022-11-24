@@ -55,7 +55,25 @@ class _UserProfilePageState extends State<UserProfilePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _header(context),
-          // _userContent(context, state),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Feed', style: titleStyle),
+                Text(
+                    'Posts: ${userProfileStore.amountPosts}  Reposts: ${userProfileStore.amountReposts}  Quotes: ${userProfileStore.amountQuotedPosts}',
+                    style: labelStyle)
+              ],
+            ),
+          ),
+          const AppDivider(
+            color: Colors.black54,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
           Expanded(
             child: AppListPublicationsWidget(
               contents: state.contents,
@@ -115,8 +133,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   _userContent(BuildContext context, SuccessUserProfileState state) {
     return Container(
       padding: const EdgeInsets.all(16),
-      child: ListView(
-        shrinkWrap: true,
+      child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -134,10 +151,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
           const SizedBox(
             height: 8,
           ),
-          AppListPublicationsWidget(
-            contents: state.contents,
+          Expanded(
+            child: AppListPublicationsWidget(
+              contents: state.contents,
+              shrinkWrap: true,
+            ),
           )
-          // _listView(state)
         ],
       ),
     );
