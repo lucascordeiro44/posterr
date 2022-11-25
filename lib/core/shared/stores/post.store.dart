@@ -38,6 +38,7 @@ class PostStore extends ValueNotifier<HomeContentState> {
   Future<bool> createPost(String title, String text) async {
     if (authStore.getLoggedUser.canPublish()) {
       await createUsecase.call(title, text);
+      await fetchHomeContent();
       return true;
     } else {
       return false;
@@ -47,6 +48,7 @@ class PostStore extends ValueNotifier<HomeContentState> {
   Future<bool> createRepost(Post post) async {
     if (authStore.getLoggedUser.canPublish()) {
       await createRepostUsecase.call(post);
+      await fetchHomeContent();
       return true;
     } else {
       return false;

@@ -1,6 +1,8 @@
 # posterr
-
-A new Flutter project.
+Posterr is very similar to Twitter, but it has far fewer
+features.
+Posterr only has two screens, the home (default), and the user profile screen, which
+are described below. Other data and actions are also detailed below.
 
 ## Getting Started
 
@@ -16,4 +18,10 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
+To run this project you should have installed in your machine the flutter
+
+To generate  *.g.dart files do you need run this command below.
 flutter packages pub run build_runner build --delete-conflicting-outputs
+
+
+### Self Critique

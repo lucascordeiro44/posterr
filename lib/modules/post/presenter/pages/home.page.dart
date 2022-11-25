@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: AppListPublicationsWidget(
             contents: state.contents,
-            onFinishFetchCallback: postStore.fetchHomeContent,
+            onFinishFetchCallback: () {},
           ));
     }
 
