@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/core/styles.dart';
-import 'package:posterr/core/widgets/circle_avatar.dart';
+import 'package:posterr/core/shared/widgets/circle_avatar.dart';
 
 class NewUserProfilePage extends StatefulWidget {
   const NewUserProfilePage({super.key});

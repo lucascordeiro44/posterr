@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:posterr/core/models/content_item.dart';
-import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_user_contents.usecase.dart';
 import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
 

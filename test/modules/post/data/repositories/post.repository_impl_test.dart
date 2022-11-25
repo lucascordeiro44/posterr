@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/modules/post/data/repositories/post.repository_impl.dart';
 
 import '../../../../mocks.dart';

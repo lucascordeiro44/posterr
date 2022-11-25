@@ -52,29 +52,33 @@ class UserProfileRepositoryImpl implements IUserProfileRepository {
       List<ContentItem> result = [];
       if (posts.isNotEmpty) {
         final postContent = posts
-            .map<ContentItem<Post>>(
-                (e) => ContentItem<Post>(content: e, type: ContentType.post, publishDate: e.postDate))
+            .map<ContentItem<Post>>((e) => ContentItem<Post>(
+                content: e, type: ContentType.post, publishDate: e.postDate))
             .toList();
         result.addAll(postContent);
       }
       if (reposts.isNotEmpty) {
         final repostContent = reposts
-            .map<ContentItem<Repost>>((e) =>
-                ContentItem<Repost>(content: e, type: ContentType.repost, publishDate: e.repostDate))
+            .map<ContentItem<Repost>>((e) => ContentItem<Repost>(
+                content: e,
+                type: ContentType.repost,
+                publishDate: e.repostDate))
             .toList();
         result.addAll(repostContent);
       }
 
       if (quotePosts.isNotEmpty) {
         final quotePostsContent = quotePosts
-            .map<ContentItem<QuotePost>>((e) =>
-                ContentItem<QuotePost>(content: e, type: ContentType.quotePost, publishDate: e.quotePostDate))
+            .map<ContentItem<QuotePost>>((e) => ContentItem<QuotePost>(
+                content: e,
+                type: ContentType.quotePost,
+                publishDate: e.quotePostDate))
             .toList();
         result.addAll(quotePostsContent);
       }
-        result.sort(
+      result.sort(
         (a, b) {
-         return a.publishDate.compareTo(b.publishDate);
+          return -a.publishDate.compareTo(b.publishDate);
         },
       );
       return right(result);

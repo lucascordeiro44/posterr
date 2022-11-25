@@ -12,7 +12,7 @@ import 'package:posterr/modules/post/domain/usecases/create_quote_post.usecase.d
 import 'package:posterr/modules/post/domain/usecases/create_repost.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/get_home_content.usecase.dart';
 import 'package:posterr/modules/post/presenter/pages/home.page.dart';
-import 'package:posterr/core/stores/post.store.dart';
+import 'package:posterr/core/shared/stores/post.store.dart';
 
 class PostModule extends Module {
   @override

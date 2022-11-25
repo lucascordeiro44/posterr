@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:posterr/core/models/content_item.dart';
-import 'package:posterr/core/stores/auth_store.dart';
-import 'package:posterr/core/stores/post.store.dart';
-import 'package:posterr/core/widgets/card_quote_post.dart';
-import 'package:posterr/core/widgets/card_repost_widget.dart';
-import 'package:posterr/core/widgets/card_widget.dart';
-import 'package:posterr/core/widgets/modal_bottom_sheet.widget.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/post.store.dart';
+import 'package:posterr/core/shared/widgets/card_quote_post.dart';
+import 'package:posterr/core/shared/widgets/card_repost_widget.dart';
+import 'package:posterr/core/shared/widgets/card_widget.dart';
+import 'package:posterr/core/shared/widgets/modal_bottom_sheet.widget.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
@@ -14,10 +14,12 @@ import 'package:quickalert/quickalert.dart';
 
 class AppListPublicationsWidget extends StatefulWidget {
   final List<ContentItem> contents;
-  bool shrinkWrap;
-  AppListPublicationsWidget({
+  final bool shrinkWrap;
+  final Function() onFinishFetchCallback;
+  const AppListPublicationsWidget({
     required this.contents,
     this.shrinkWrap = false,
+    required this.onFinishFetchCallback,
     super.key,
   });
 
@@ -30,6 +32,7 @@ class _AppListPublicationsWidgetState extends State<AppListPublicationsWidget> {
   List<ContentItem> get contents => widget.contents;
   final postStore = Modular.get<PostStore>();
   final authStore = Modular.get<AuthStore>();
+  final ScrollController listController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return _listView();
@@ -42,6 +45,7 @@ class _AppListPublicationsWidgetState extends State<AppListPublicationsWidget> {
       child: ListView.builder(
         shrinkWrap: widget.shrinkWrap,
         itemCount: listLength,
+        controller: listController,
         itemBuilder: (context, index) {
           ContentItem contentItem = contents[index];
           if (contentItem.type == ContentType.post) {
@@ -72,7 +76,12 @@ class _AppListPublicationsWidgetState extends State<AppListPublicationsWidget> {
                 type: QuickAlertType.error,
                 title: 'Limit exceeded',
                 text: 'Your limit of posts per day has exceeded 5.');
+            return;
           }
+          setState(() async {
+            await widget.onFinishFetchCallback();
+            scrollToTop();
+          });
         },
         onClickQuotePost: () async =>
             _showBottomSheet(context: context, isQuotePost: true, post: post),
@@ -126,10 +135,12 @@ class _AppListPublicationsWidgetState extends State<AppListPublicationsWidget> {
             type: QuickAlertType.error,
             title: 'Limit exceeded',
             text: 'Your limit of posts per day has exceeded 5.');
+        return;
       }
       setState(() {
+        widget.onFinishFetchCallback();
         postStore.textController.clear();
-        postStore.scrollToTop();
+        scrollToTop();
       });
     }
   }
@@ -144,11 +155,21 @@ class _AppListPublicationsWidgetState extends State<AppListPublicationsWidget> {
             type: QuickAlertType.error,
             title: 'Limit exceeded',
             text: 'Your limit of posts per day has exceeded 5.');
+        return;
       }
       setState(() {
+        widget.onFinishFetchCallback();
         postStore.textController.clear();
-        postStore.scrollToTop();
+        scrollToTop();
       });
     }
+  }
+
+  void scrollToTop() {
+    listController.animateTo(
+      listController.position.minScrollExtent,
+      duration: const Duration(seconds: 2),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 }

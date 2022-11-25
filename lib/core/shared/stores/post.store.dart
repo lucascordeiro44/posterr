@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
 import 'package:posterr/modules/post/domain/usecases/create_post.usecase.dart';
 import 'package:posterr/modules/post/domain/usecases/create_quote_post.usecase.dart';
@@ -38,7 +38,6 @@ class PostStore extends ValueNotifier<HomeContentState> {
   Future<bool> createPost(String title, String text) async {
     if (authStore.getLoggedUser.canPublish()) {
       await createUsecase.call(title, text);
-      await fetchHomeContent();
       return true;
     } else {
       return false;
@@ -48,7 +47,6 @@ class PostStore extends ValueNotifier<HomeContentState> {
   Future<bool> createRepost(Post post) async {
     if (authStore.getLoggedUser.canPublish()) {
       await createRepostUsecase.call(post);
-      await fetchHomeContent();
       return true;
     } else {
       return false;

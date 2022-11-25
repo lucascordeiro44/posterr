@@ -1,9 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
-import 'package:posterr/core/pages/splash_screen.page.dart';
+import 'package:posterr/core/shared/pages/splash_screen.page.dart';
 import 'package:posterr/modules/post/domain/entities/quote_post.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
-import 'package:posterr/modules/user_profile/presenter/pages/new_user_profile.page.dart';
 import 'package:posterr/modules/user_profile/presenter/pages/user_profile.page.dart';
 import 'package:posterr/modules/user_profile/presenter/store/choose_users.store.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
@@ -16,7 +15,7 @@ import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.us
 import 'package:posterr/modules/user_profile/domain/usecases/get_user_contents.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_users.usecase.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/set_users.usecase.dart';
-import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/modules/user_profile/presenter/pages/choose_user.page.dart';
 import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posterr/core/utils/utils.dart';
-import 'package:posterr/core/widgets/circle_avatar.dart';
-import 'package:posterr/core/widgets/divider.dart';
+import 'package:posterr/core/shared/widgets/circle_avatar.dart';
+import 'package:posterr/core/shared/widgets/divider.dart';
 import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
 

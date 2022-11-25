@@ -13,8 +13,8 @@ final List<User> users = [
       fullName: 'Lucas Cordeiro',
       username: 'lucascordeiro',
       photo: 'https://picsum.photos/150/150',
-      userPublishCounter: 5,
-      lastPutlicationEventDate: DateTime(2022, 11,13),
+      userPublishCounter: 0,
+      lastPutlicationEventDate: DateTime.now(),
       joinedDate: DateTime.now()),
   User(
       fullName: 'Maria Cordeiro',

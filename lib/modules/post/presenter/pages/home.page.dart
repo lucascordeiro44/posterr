@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/core/styles.dart';
-import 'package:posterr/core/widgets/card_quote_post.dart';
-import 'package:posterr/core/widgets/card_repost_widget.dart';
-import 'package:posterr/core/widgets/card_widget.dart';
-import 'package:posterr/core/models/content_item.dart';
-import 'package:posterr/core/widgets/list_publications.widget.dart';
-import 'package:posterr/core/widgets/modal_bottom_sheet.widget.dart';
+import 'package:posterr/core/shared/widgets/list_publications.widget.dart';
+import 'package:posterr/core/shared/widgets/modal_bottom_sheet.widget.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
-import 'package:posterr/modules/post/domain/entities/quote_post.dart';
-import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/post/presenter/states/post.state.dart';
 import 'package:quickalert/quickalert.dart';
-import '../../../../core/stores/post.store.dart';
+import '../../../../core/shared/stores/post.store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -70,7 +64,10 @@ class _HomePageState extends State<HomePage> {
       }
       return Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          child: AppListPublicationsWidget(contents: state.contents));
+          child: AppListPublicationsWidget(
+            contents: state.contents,
+            onFinishFetchCallback: postStore.fetchHomeContent,
+          ));
     }
 
     if (state is ErrorHomeContentState) {
@@ -79,72 +76,6 @@ class _HomePageState extends State<HomePage> {
         child: Text(state.message, style: titleStyle),
       );
     }
-  }
-
-  _listView(SuccessHomeContentState state) {
-    int listLength = state.contents.length;
-    return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: ListView.builder(
-        controller: postStore.listController,
-        itemCount: listLength,
-        itemBuilder: (context, index) {
-          // int reversedIndex = listLength - 1 - index;
-          ContentItem contentItem = state.contents[index];
-          if (contentItem.type == ContentType.post) {
-            Post post = contentItem.content;
-            return _postCard(post);
-          } else if (contentItem.type == ContentType.repost) {
-            Repost repost = contentItem.content;
-            return _repostCard(repost);
-          } else {
-            QuotePost quote = contentItem.content;
-            return _quotePostCard(quote);
-          }
-        },
-      ),
-    );
-  }
-
-  _postCard(Post post) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-      child: AppCard(
-        post: post,
-        onClickRepost: () async {
-          final result = await postStore.createRepost(post);
-          if (!result) {
-            QuickAlert.show(
-                context: context,
-                type: QuickAlertType.error,
-                title: 'Limit exceeded',
-                text: 'Your limit of posts per day has exceeded 5.');
-          }
-          postStore.scrollToTop();
-        },
-        onClickQuotePost: () async =>
-            _showBottomSheet(context: context, isQuotePost: true, post: post),
-      ),
-    );
-  }
-
-  _repostCard(Repost repost) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-      child: AppCardRepost(
-        repost: repost,
-        loggedUser: authStore.getLoggedUser,
-      ),
-    );
-  }
-
-  _quotePostCard(QuotePost quotePost) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-      child: AppCardQuotePost(
-        quotePost: quotePost,
-      ),
-    );
   }
 
   void _showBottomSheet({context, bool isQuotePost = false, Post? post}) {
@@ -176,8 +107,8 @@ class _HomePageState extends State<HomePage> {
             text: 'Your limit of posts per day has exceeded 5.');
       }
       setState(() {
+        postStore.fetchHomeContent();
         postStore.textController.clear();
-        postStore.scrollToTop();
       });
     }
   }
@@ -193,9 +124,9 @@ class _HomePageState extends State<HomePage> {
             title: 'Limit exceeded',
             text: 'Your limit of posts per day has exceeded 5.');
       }
-      setState(() {
+      setState(() async {
+        postStore.fetchHomeContent();
         postStore.textController.clear();
-        postStore.scrollToTop();
       });
     }
   }

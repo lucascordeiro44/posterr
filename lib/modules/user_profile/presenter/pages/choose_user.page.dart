@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/core/styles.dart';
 import 'package:posterr/modules/user_profile/presenter/states/choose_user.state.dart';
 import 'package:posterr/modules/user_profile/presenter/store/choose_users.store.dart';

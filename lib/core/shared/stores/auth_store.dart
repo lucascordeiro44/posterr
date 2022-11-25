@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
-import 'package:posterr/core/stores/auth_store.state.dart';
+import 'package:posterr/core/shared/stores/auth_store.state.dart';
 import 'package:posterr/modules/user_profile/domain/usecases/get_current_user.usecase.dart';
 
-import '../../modules/user_profile/domain/entities/user.dart';
+import '../../../modules/user_profile/domain/entities/user.dart';
 
 class AuthStore extends ValueNotifier<AuthStoreState> {
   final IGetCurrentUserUsecase usecase;

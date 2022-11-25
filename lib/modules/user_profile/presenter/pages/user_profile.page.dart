@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:posterr/core/models/content_item.dart';
 import 'package:posterr/core/styles.dart';
-import 'package:posterr/core/widgets/circle_avatar.dart';
-import 'package:posterr/core/widgets/divider.dart';
-import 'package:posterr/core/widgets/list_publications.widget.dart';
-import 'package:posterr/core/widgets/modal_bottom_sheet.widget.dart';
+import 'package:posterr/core/shared/widgets/circle_avatar.dart';
+import 'package:posterr/core/shared/widgets/divider.dart';
+import 'package:posterr/core/shared/widgets/list_publications.widget.dart';
+import 'package:posterr/core/shared/widgets/modal_bottom_sheet.widget.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
-import 'package:posterr/core/stores/post.store.dart';
+import 'package:posterr/core/shared/stores/post.store.dart';
 import 'package:posterr/modules/user_profile/presenter/states/user_profile.state.dart';
-import 'package:posterr/core/stores/auth_store.dart';
+import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/modules/user_profile/presenter/store/user_profile.store.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -74,12 +73,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
           const SizedBox(
             height: 8,
           ),
-          Expanded(
-            child: AppListPublicationsWidget(
-              contents: state.contents,
-              shrinkWrap: true,
-            ),
-          )
+          state.contents.isEmpty
+              ? const Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text("You don't have any posts yet!",
+                        style: titleStyle),
+                  ),
+                )
+              : Expanded(
+                  child: AppListPublicationsWidget(
+                    contents: state.contents,
+                    onFinishFetchCallback: userProfileStore.fetchUserContents,
+                    shrinkWrap: true,
+                  ),
+                )
         ],
       );
     }
@@ -130,38 +138,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  _userContent(BuildContext context, SuccessUserProfileState state) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Feed', style: titleStyle),
-              Text(
-                  'Posts: ${userProfileStore.amountPosts}  Reposts: ${userProfileStore.amountReposts}  Quotes: ${userProfileStore.amountQuotedPosts}',
-                  style: labelStyle)
-            ],
-          ),
-          const AppDivider(
-            color: Colors.black54,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Expanded(
-            child: AppListPublicationsWidget(
-              contents: state.contents,
-              shrinkWrap: true,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
   void _showBottomSheet({context, bool isQuotePost = false, Post? post}) {
     showModalBottomSheet(
         context: context,
@@ -184,7 +160,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
       final result = await postStore.createPost(
           postStore.titleController.text, postStore.textController.text);
       if (!result) {
-        userProfileStore.fetchUserContents();
         QuickAlert.show(
             context: context,
             type: QuickAlertType.error,
@@ -192,6 +167,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             text: 'Your limit of posts per day has exceeded 5.');
       }
       setState(() {
+        userProfileStore.fetchUserContents();
         postStore.textController.clear();
         postStore.scrollToTop();
       });
@@ -203,7 +179,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
       final result =
           await postStore.createQuotePost(post, postStore.textController.text);
       if (!result) {
-        userProfileStore.fetchUserContents();
         QuickAlert.show(
             context: context,
             type: QuickAlertType.error,
@@ -211,6 +186,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             text: 'Your limit of posts per day has exceeded 5.');
       }
       setState(() {
+        userProfileStore.fetchUserContents();
         postStore.textController.clear();
         postStore.scrollToTop();
       });

@@ -13,7 +13,8 @@ class GetUserContentsUsecase extends IGetUserContentsUsecase {
   GetUserContentsUsecase(this.repository);
 
   @override
-  Future<Either<Failure, List<ContentItem>>> call(User user) {
+  Future<Either<Failure, List<ContentItem>>> call(User user) async {
+    // await Future.delayed(const Duration(seconds: 2));
     return repository.getUserContents(user);
   }
 }
