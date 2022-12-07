@@ -73,8 +73,10 @@ flutter packages pub run build_runner watch
 
 ## About the Project Architecture
 
-The project was built using Clean Arch principles and thinking about modularization, for that I used flutter_modular that helps in this separation of modules. In this way, this type of architecture will be effective in a scalable project that will be developed using multi repositories and micro services. Thinking about separation of features.
+The project was built using Clean Architecture principles and thinking about modularization, for that I used flutter_modular that helps in this separation of modules. In this way, this type of architecture will be effective in a scalable project that will be developed using multi repositories and micro services. Thinking about separation of features.
 I used the Hive library as a local database due to the characteristics of the challenge, as it is actually an emulation of a Rest api, I did not see the need to use a more powerful database such as SQLite.
+
+Each module has its own routes and its own dependencies, I tried as much as possible to make the modules independent.
 
 ## Self Critique & scaling
 
@@ -82,10 +84,16 @@ As a first improvement, thinking about more features, scalability, more relation
 
 Assuming that the project will consume data from a Rest-type API structure, it would be important to also cache the data to avoid unnecessary reloads, thus alleviating API consumption. Another good point is a WebSocket approach to have a real-time reading of the data transmitted on the Home page or if not a defined timer to carry out communication via the HTTP Protocol itself, thus avoiding a drop in performance due to the amount of data transmitted.
 
+Another way to improve performance and avoid traffic overload in the case of many users using it would be to develop a pagination system to load the home content and the user's feed.
+
 As the project was initially thought about scalability, the architecture was initially built in a modularized way, so with the significant increase in users using the app, there would consequently be an increase in maintenance, more developers and new features in the project. Thus, microapplication and multirepository architecture are a good approach for these characteristics.
+
+In the case of an app made for a company and with a business purpose, it is different from this one. It would have a more efficient approach in the communication between the modules, using a Stream Channel that would work as a transmitter of messages between the modules. In this way, making the modules more independent, enabling a decentralized construction between the devs.
 
 After this initial version, it would be essential to implement some form of Crash tracking such as (Firebase Crashlytics or Sentry), tagging such as Analytics (Google Anlytics etc) to track the user's journey. Another integration would be with some type of remote config (Remote Config) to disable features in production, helping with project maintenance.
 
 It would also be important to carry out CI/CD integration, for an automated deploy and release process, using frameworks such as Codemagic, AppCenter, Firebase, etc. Thus facilitating and making the development and release process safer. I could make triggers with the PR in the repository, generating automatic builds.
 Preparing steps to run unit and integration tests.
+
+
 
