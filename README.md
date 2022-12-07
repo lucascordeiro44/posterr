@@ -57,8 +57,7 @@ flutter packages pub run build_runner watch
 
 **Step 4:**
 ```
-flutter run android
-flutter run ios
+flutter run
 ```
 
 ## Posterr Features:
