@@ -76,4 +76,16 @@ flutter packages pub run build_runner watch
 The project was built using Clean Arch principles and thinking about modularization, for that I used flutter_modular that helps in this separation of modules. In this way, this type of architecture will be effective in a scalable project that will be developed using multi repositories and micro services. Thinking about separation of features.
 I used the Hive library as a local database due to the characteristics of the challenge, as it is actually an emulation of a Rest api, I did not see the need to use a more powerful database such as SQLite.
 
-### Self Critique
+##### Self Critique & scaling
+
+Como primeira melhoria, pensando em mais features, escalabilidade, mais complexidade de relacionamento e fluxo dos dados a serém persistidos, trocaria o banco de dados para um mais robusto tal como [Drift database] (https://drift.simonbinder.eu/) (based SQLite database).
+
+Assumindo que o projeto vai se consumir dados de uma estrutura de API do tipo Rest seria importante fazer um cacheamento dos dados também para evitar recarregamentos desnecessários assim aliviando consumo na API. Outro bom ponto séria uma abordagem de WebSocket para ter uma leitura em tempo real dos dados trafegados na pagina de Home ou se não um timer definido para realizar uma comunicação via Protocolo HTTP mesmo, evitando assim queda de perfomance devido a quantidade de dados trafegados.
+
+Como o projeto já foi pensado inicialmente em escalabilidade, a arquitetura foi inicialmente construída de forma modularizada, assim com o aumento expressivo de usuários utilizando o app, teria consequentemente um aumento de manutenção, mais desenvolvedores e novas features no projeto. Dessa forma, arquitetura de microaplicacoes e multirepositorios são uma boa abordagem para essas caracteristicas.
+
+Após essa versão inicial seria inprescindivel implementar alguma forma de rastreio de Crashs tal como (Firebase Crashlytics or Sentry), tagueamento tal com Analytics (Google Anlytics  etc) para rastrear a jornada do usuário. Outra integração seria com alguma config remota tipo (Remote Config) para desabilitar as features em produção, ajudando na manutenção do projeto. 
+
+Seria importante também realizar integração CI/CD, para um deploy e esteria de release automatizado, utilizando frameworks tais como Codemagic, AppCenter, Firebase  etc. Assim facilitando e tornando mais seguro o processo de desenvolvimento e release. Poderia fazer triggers com o PR no repositorio, gerando builds automticos. 
+Preparando passos para rodar os testes unitarios e de integração.
+
