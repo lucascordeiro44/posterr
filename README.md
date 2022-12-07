@@ -55,13 +55,13 @@ or watch command in order to keep the source code synced automatically:
 flutter packages pub run build_runner watch
 ```
 
-### Posterr Features:
+## Posterr Features:
 * Splash
 * Login (Choose User)
 * Home
 * User Profile
 
-#### Libraries & Tools Used
+## Libraries & Tools Used
 
 * [Hive Database](https://github.com/hivedb/hive) (For local database)
 * [Flutter Modular](https://pub.dev/packages/flutter_modular) (To design archtecture with using modularization)
@@ -71,12 +71,12 @@ flutter packages pub run build_runner watch
 * [hive_generator](https://pub.dev/packages/hive_generator) (to generate DTO Files)
 
 
-#### About the Project Architecture
+## About the Project Architecture
 
 The project was built using Clean Arch principles and thinking about modularization, for that I used flutter_modular that helps in this separation of modules. In this way, this type of architecture will be effective in a scalable project that will be developed using multi repositories and micro services. Thinking about separation of features.
 I used the Hive library as a local database due to the characteristics of the challenge, as it is actually an emulation of a Rest api, I did not see the need to use a more powerful database such as SQLite.
 
-##### Self Critique & scaling
+## Self Critique & scaling
 
 As a first improvement, thinking about more features, scalability, more relationship complexity and data flow to be persisted, I would change the database to a more robust one such as [Drift database] (https://drift.simonbinder.eu/) (based SQLite database).
 
