@@ -78,14 +78,14 @@ I used the Hive library as a local database due to the characteristics of the ch
 
 ##### Self Critique & scaling
 
-Como primeira melhoria, pensando em mais features, escalabilidade, mais complexidade de relacionamento e fluxo dos dados a serém persistidos, trocaria o banco de dados para um mais robusto tal como [Drift database] (https://drift.simonbinder.eu/) (based SQLite database).
+As a first improvement, thinking about more features, scalability, more relationship complexity and data flow to be persisted, I would change the database to a more robust one such as [Drift database] (https://drift.simonbinder.eu/) (based SQLite database).
 
-Assumindo que o projeto vai se consumir dados de uma estrutura de API do tipo Rest seria importante fazer um cacheamento dos dados também para evitar recarregamentos desnecessários assim aliviando consumo na API. Outro bom ponto séria uma abordagem de WebSocket para ter uma leitura em tempo real dos dados trafegados na pagina de Home ou se não um timer definido para realizar uma comunicação via Protocolo HTTP mesmo, evitando assim queda de perfomance devido a quantidade de dados trafegados.
+Assuming that the project will consume data from a Rest-type API structure, it would be important to also cache the data to avoid unnecessary reloads, thus alleviating API consumption. Another good point is a WebSocket approach to have a real-time reading of the data transmitted on the Home page or if not a defined timer to carry out communication via the HTTP Protocol itself, thus avoiding a drop in performance due to the amount of data transmitted.
 
-Como o projeto já foi pensado inicialmente em escalabilidade, a arquitetura foi inicialmente construída de forma modularizada, assim com o aumento expressivo de usuários utilizando o app, teria consequentemente um aumento de manutenção, mais desenvolvedores e novas features no projeto. Dessa forma, arquitetura de microaplicacoes e multirepositorios são uma boa abordagem para essas caracteristicas.
+As the project was initially thought about scalability, the architecture was initially built in a modularized way, so with the significant increase in users using the app, there would consequently be an increase in maintenance, more developers and new features in the project. Thus, microapplication and multirepository architecture are a good approach for these characteristics.
 
-Após essa versão inicial seria inprescindivel implementar alguma forma de rastreio de Crashs tal como (Firebase Crashlytics or Sentry), tagueamento tal com Analytics (Google Anlytics  etc) para rastrear a jornada do usuário. Outra integração seria com alguma config remota tipo (Remote Config) para desabilitar as features em produção, ajudando na manutenção do projeto. 
+After this initial version, it would be essential to implement some form of Crash tracking such as (Firebase Crashlytics or Sentry), tagging such as Analytics (Google Anlytics etc) to track the user's journey. Another integration would be with some type of remote config (Remote Config) to disable features in production, helping with project maintenance.
 
-Seria importante também realizar integração CI/CD, para um deploy e esteria de release automatizado, utilizando frameworks tais como Codemagic, AppCenter, Firebase  etc. Assim facilitando e tornando mais seguro o processo de desenvolvimento e release. Poderia fazer triggers com o PR no repositorio, gerando builds automticos. 
-Preparando passos para rodar os testes unitarios e de integração.
+It would also be important to carry out CI/CD integration, for an automated deploy and release process, using frameworks such as Codemagic, AppCenter, Firebase, etc. Thus facilitating and making the development and release process safer. I could make triggers with the PR in the repository, generating automatic builds.
+Preparing steps to run unit and integration tests.
 
