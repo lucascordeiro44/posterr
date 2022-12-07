@@ -55,6 +55,12 @@ or watch command in order to keep the source code synced automatically:
 flutter packages pub run build_runner watch
 ```
 
+**Step 4:**
+```
+flutter run android
+flutter run ios
+```
+
 ## Posterr Features:
 * Splash
 * Login (Choose User)
