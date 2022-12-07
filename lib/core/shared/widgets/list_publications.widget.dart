@@ -24,6 +24,8 @@ class AppListPublicationsWidget extends StatefulWidget {
   });
 
   @override
+
+
   State<AppListPublicationsWidget> createState() =>
       _AppListPublicationsWidgetState();
 }

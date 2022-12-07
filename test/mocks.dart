@@ -4,6 +4,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:posterr/core/shared/stores/auth_store.dart';
 import 'package:posterr/modules/post/data/datasources/post.datasource.dart';
 import 'package:posterr/modules/post/domain/entities/post.dart';
+import 'package:posterr/modules/post/domain/entities/quote_post.dart';
+import 'package:posterr/modules/post/domain/entities/repost.dart';
 import 'package:posterr/modules/post/domain/repositories/post.repository.dart';
 import 'package:posterr/modules/user_profile/data/datasources/user.datasource.dart';
 import 'package:posterr/modules/user_profile/domain/entities/user.dart';
@@ -74,3 +76,11 @@ class MockPostsRepository extends Mock implements IPostsRepository {}
 class MockPostDatasource extends Mock implements PostDatasource {}
 
 class MockHivePost extends Mock implements Box<Post> {}
+
+class MockHive extends Mock implements Box<User> {}
+
+class PostMockHive extends Mock implements Box<Post> {}
+
+class RepostMockHive extends Mock implements Box<Repost> {}
+
+class QuotePostMockHive extends Mock implements Box<QuotePost> {}
